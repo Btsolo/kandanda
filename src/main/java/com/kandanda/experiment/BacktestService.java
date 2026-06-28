@@ -35,7 +35,6 @@ public class BacktestService {
     private static final Set<String> GROUP_ROUNDS =
             Set.of("Matchday 1", "Matchday 2", "Matchday 3");
 
-    private final RatingService ratingService = new RatingService();
     private final CalibrationService scoreboard = new CalibrationService();
 
     public record BacktestResult(
@@ -58,18 +57,38 @@ public class BacktestService {
                             + group.size() + " group, " + knockout.size() + " knockout");
         }
 
-        CalibrationReport groupOnly = fitAndScore(group, knockout);
-        CalibrationReport allData = fitAndScore(tournament, knockout);
+        CalibrationReport groupOnly = fitAndScore(group, knockout, 0.0);
+        CalibrationReport allData = fitAndScore(tournament, knockout, 0.0);
 
         return new BacktestResult(group.size(), knockout.size(), groupOnly, allData);
     }
 
     /**
-     * Fit ratings on {@code trainSet}, predict every market for each match in
-     * {@code testSet}, and score those predictions against the actual 90-minute outcomes.
+     * Sweep the prior strength k over the given values, fitting group-only each time and
+     * scoring on the knockouts. Returns k -> Brier, so the caller can see where the
+     * honest model's calibration bottoms out. This is the S7 experiment.
      */
-    private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet) {
-        List<TeamRating> ratings = ratingService.fit(trainSet);
+    public java.util.LinkedHashMap<Double, Double> sweepPrior(
+            List<MatchResult> tournament, double[] kValues) {
+        List<MatchResult> group = new ArrayList<>();
+        List<MatchResult> knockout = new ArrayList<>();
+        for (MatchResult m : tournament) {
+            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            else knockout.add(m);
+        }
+        var out = new java.util.LinkedHashMap<Double, Double>();
+        for (double k : kValues) {
+            out.put(k, fitAndScore(group, knockout, k).brier());
+        }
+        return out;
+    }
+
+    /**
+     * Fit ratings on {@code trainSet} (with prior strength k), predict every market for
+     * each match in {@code testSet}, and score those against the actual 90-minute outcomes.
+     */
+    private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet, double k) {
+        List<TeamRating> ratings = new RatingService(k).fit(trainSet);
         double leagueAvg = RatingService.leagueAverageGoals(trainSet);
         PoissonMatchModel model = new PoissonMatchModel(leagueAvg);
 

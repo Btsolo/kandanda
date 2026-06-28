@@ -42,6 +42,30 @@ public class RatingService {
     private static final double NEUTRAL_HOME_ADVANTAGE = 1.0; // World Cup = neutral venues
 
     /**
+     * Prior strength k (additive smoothing): the number of "phantom average games" each
+     * team is treated as having also played. k=0 means no prior (raw ratings). Larger k
+     * pulls every rating toward 1.0 (average), which tames small-sample noise — and
+     * matters MORE for teams with fewer games, exactly when it's needed.
+     *
+     * <p>A 2022 sweep showed k=0 scored Brier 0.31 on knockouts (worse than a coin), while
+     * a substantial prior pushed below the 0.25 baseline — strong evidence that group-stage
+     * ratings carry little knockout signal, so shrinking them toward average helps.
+     */
+    private final double priorStrength;
+
+    /** Default: no prior (k=0), preserving the original raw-rating behaviour. */
+    public RatingService() {
+        this(0.0);
+    }
+
+    public RatingService(double priorStrength) {
+        if (priorStrength < 0) {
+            throw new IllegalArgumentException("priorStrength (k) must be >= 0");
+        }
+        this.priorStrength = priorStrength;
+    }
+
+    /**
      * League average goals scored by one team in one game, over the given matches.
      * This is the baseline the Poisson model multiplies by; exposed so callers build
      * the match model with the SAME average the ratings were fitted against.
@@ -76,6 +100,8 @@ public class RatingService {
 
         // League average goals scored by one team in one game (single source of truth).
         double avg = leagueAverageGoals(matches);
+        // Additive-smoothing prior: k phantom average games (k=0 => no prior).
+        double prior = priorStrength * avg;
 
         Map<String, Double> attack = new HashMap<>();
         Map<String, Double> defence = new HashMap<>();
@@ -85,8 +111,8 @@ public class RatingService {
         }
 
         for (int iter = 0; iter < MAX_ITERATIONS; iter++) {
-            updateAttack(teams, matches, attack, defence, avg);
-            updateDefence(teams, matches, attack, defence, avg);
+            updateAttack(teams, matches, attack, defence, avg, prior);
+            updateDefence(teams, matches, attack, defence, avg, prior);
         }
 
         List<TeamRating> result = new ArrayList<>();
@@ -98,7 +124,8 @@ public class RatingService {
     }
 
     private void updateAttack(Set<String> teams, List<MatchResult> matches,
-                              Map<String, Double> attack, Map<String, Double> defence, double avg) {
+                              Map<String, Double> attack, Map<String, Double> defence,
+                              double avg, double prior) {
         Map<String, Double> next = new HashMap<>();
         for (String t : teams) {
             double scored = 0.0, expected = 0.0;
@@ -114,14 +141,18 @@ public class RatingService {
                     expected += defence.get(home) * avg;
                 }
             }
-            next.put(t, expected > 0 ? scored / expected : 1.0);
+            // Additive smoothing: add `prior` phantom average goals to numerator AND
+            // denominator. Pulls toward 1.0; effect shrinks as real games accumulate.
+            double denom = expected + prior;
+            next.put(t, denom > 0 ? (scored + prior) / denom : 1.0);
         }
         recentreToMeanOne(next);
         attack.putAll(next);
     }
 
     private void updateDefence(Set<String> teams, List<MatchResult> matches,
-                               Map<String, Double> attack, Map<String, Double> defence, double avg) {
+                               Map<String, Double> attack, Map<String, Double> defence,
+                               double avg, double prior) {
         Map<String, Double> next = new HashMap<>();
         for (String t : teams) {
             double conceded = 0.0, expected = 0.0;
@@ -137,7 +168,8 @@ public class RatingService {
                     expected += attack.get(home) * avg;
                 }
             }
-            next.put(t, expected > 0 ? conceded / expected : 1.0);
+            double denom = expected + prior;
+            next.put(t, denom > 0 ? (conceded + prior) / denom : 1.0);
         }
         recentreToMeanOne(next);
         defence.putAll(next);

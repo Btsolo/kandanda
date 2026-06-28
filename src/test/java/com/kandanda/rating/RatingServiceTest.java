@@ -71,4 +71,37 @@ class RatingServiceTest {
     void emptyThrows() {
         assertThrows(IllegalArgumentException.class, () -> service.fit(List.of()));
     }
+
+    @Test
+    void priorShrinksRatingsTowardOne() {
+        // With a large prior, every rating should be pulled close to 1.0 (average).
+        var strongPrior = new RatingService(40.0);
+        var ratings = strongPrior.fit(syntheticLeague());
+        for (var r : ratings) {
+            assertTrue(Math.abs(r.attack() - 1.0) < 0.25,
+                    "strong prior should pull attack near 1.0, got " + r.attack());
+            assertTrue(Math.abs(r.defence() - 1.0) < 0.25,
+                    "strong prior should pull defence near 1.0, got " + r.defence());
+        }
+    }
+
+    @Test
+    void priorReducesSpreadOfRatings() {
+        // The spread (max-min attack) should shrink as the prior strengthens.
+        double spreadNoPrior = spread(new RatingService(0.0).fit(syntheticLeague()));
+        double spreadWithPrior = spread(new RatingService(5.0).fit(syntheticLeague()));
+        assertTrue(spreadWithPrior < spreadNoPrior,
+                "prior should compress the rating spread");
+    }
+
+    private double spread(java.util.List<TeamRating> ratings) {
+        double max = ratings.stream().mapToDouble(TeamRating::attack).max().orElse(0);
+        double min = ratings.stream().mapToDouble(TeamRating::attack).min().orElse(0);
+        return max - min;
+    }
+
+    @Test
+    void negativePriorThrows() {
+        assertThrows(IllegalArgumentException.class, () -> new RatingService(-1.0));
+    }
 }

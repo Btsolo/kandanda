@@ -95,6 +95,24 @@ public class KandandaApplication {
             System.out.println("true finding about tournament football, and the bar every future");
             System.out.println("improvement (priors, player layer, Dixon-Coles) must beat.");
             System.out.println("=============================================");
+
+            // ----- S7: sweep the pre-tournament prior strength k -----
+            double[] kValues = {0, 0.5, 1, 2, 3, 5, 8, 12, 20, 40};
+            var sweep = backtest.sweepPrior(all, kValues);
+            System.out.println("============== S7 PRIOR SWEEP ================");
+            System.out.println("Group-trained, scored on knockouts. Lower Brier = better.");
+            System.out.println("  k       Brier");
+            double bestK = 0, bestBrier = Double.MAX_VALUE;
+            for (var e : sweep.entrySet()) {
+                System.out.printf("  %-6.1f  %.4f%n", e.getKey(), e.getValue());
+                if (e.getValue() < bestBrier) { bestBrier = e.getValue(); bestK = e.getKey(); }
+            }
+            System.out.printf("Best k=%.1f (Brier %.4f). k=0 was %.4f; baseline 0.2500.%n",
+                    bestK, bestBrier, sweep.get(0.0));
+            System.out.println("NOTE: a very large best-k means group form carries little knockout");
+            System.out.println("signal, so shrinking toward average wins. That is a finding, not a");
+            System.out.println("victory — real signal must come from richer data (Tier 2) later.");
+            System.out.println("=============================================");
         };
     }
 

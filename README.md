@@ -86,4 +86,15 @@ than the 0.25 coin-flip baseline. This is a true finding about tournament footba
 (knockouts are variance-dominated) and sets the bar every future improvement must beat.
 The all-data number (~0.24) looks good only because of leakage.
 
-## Sprint 1 done. Next: Sprint 2 (priors/Dixon-Coles to beat 0.31) or set up Git first.
+## Sprint 2 — beating the 0.31 base rate
+
+### S7 (Pre-tournament prior / additive smoothing) — DONE
+`RatingService(k)`: adds k "phantom average games" per team, shrinking noisy ratings
+toward 1.0. Matters more for teams with fewer games (exactly when needed).
+- `BacktestService.sweepPrior(...)` sweeps k and scores each on knockouts.
+- 2022 finding: k=0 -> Brier 0.31 (worse than coin); raising k pushes BELOW the 0.25
+  baseline, bottoming ~0.245 at large k. This means group-stage ratings carry little
+  knockout signal, so shrinking toward average helps. A finding, not a victory — real
+  signal must come from richer data (Tier 2) later, measured against this bar.
+
+### Next: S8 (Dixon-Coles low-score correction), S9 (time weighting), then Tier 2.
