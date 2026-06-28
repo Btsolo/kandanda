@@ -72,4 +72,33 @@ class PoissonMatchModelTest {
     void rejectsNonPositiveLeagueAverage() {
         assertThrows(IllegalArgumentException.class, () -> new PoissonMatchModel(0));
     }
+
+    @Test
+    void dixonColesRhoZeroEqualsPlainPoisson() {
+        // rho=0 must reproduce pure Poisson exactly (backward compatibility).
+        var plain = new PoissonMatchModel(1.34).buildGrid(1.8, 1.1);
+        var dcZero = new PoissonMatchModel(1.34, 0.0).buildGrid(1.8, 1.1);
+        for (int i = 0; i <= plain.maxGoals(); i++) {
+            for (int j = 0; j <= plain.maxGoals(); j++) {
+                assertEquals(plain.probabilityOf(i, j), dcZero.probabilityOf(i, j), 1e-12);
+            }
+        }
+    }
+
+    @Test
+    void dixonColesGridStillSumsToOne() {
+        var grid = new PoissonMatchModel(1.34, -0.1).buildGrid(1.6, 1.2);
+        assertEquals(1.0, grid.totalProbability(), 1e-9);
+    }
+
+    @Test
+    void negativeRhoRaisesDrawsLowersOneNil() {
+        var plain = new PoissonMatchModel(1.34, 0.0).buildGrid(1.4, 1.1);
+        var dc = new PoissonMatchModel(1.34, -0.1).buildGrid(1.4, 1.1);
+        // 0-0 and 1-1 should rise; 1-0 and 0-1 should fall.
+        assertTrue(dc.probabilityOf(0, 0) > plain.probabilityOf(0, 0));
+        assertTrue(dc.probabilityOf(1, 1) > plain.probabilityOf(1, 1));
+        assertTrue(dc.probabilityOf(1, 0) < plain.probabilityOf(1, 0));
+        assertTrue(dc.probabilityOf(0, 1) < plain.probabilityOf(0, 1));
+    }
 }

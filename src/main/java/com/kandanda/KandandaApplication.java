@@ -113,6 +113,19 @@ public class KandandaApplication {
             System.out.println("signal, so shrinking toward average wins. That is a finding, not a");
             System.out.println("victory — real signal must come from richer data (Tier 2) later.");
             System.out.println("=============================================");
+
+            // ----- S8: Dixon-Coles low-score correction -----
+            double[] dc = backtest.compareDixonColes(all, 5.0, -0.1);
+            System.out.println("============== S8 DIXON-COLES ================");
+            System.out.printf("At prior k=5, group-trained, knockout Brier:%n");
+            System.out.printf("   pure Poisson (rho=0)    : %.4f%n", dc[0]);
+            System.out.printf("   Dixon-Coles (rho=-0.10) : %.4f%n", dc[1]);
+            System.out.printf("   change: %+.4f  (%s)%n", dc[1] - dc[0],
+                    dc[1] < dc[0] ? "small improvement" : "no improvement");
+            System.out.println("Expected: a tiny improvement. DC is canonical and theoretically");
+            System.out.println("sound, but on 16 knockout games its effect is marginal — kept as");
+            System.out.println("a correct, honest result, not oversold.");
+            System.out.println("=============================================");
         };
     }
 

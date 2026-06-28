@@ -84,13 +84,34 @@ public class BacktestService {
     }
 
     /**
+     * Compare pure Poisson vs Dixon-Coles at a fixed prior, scored on knockouts.
+     * Returns [brierNoDC, brierWithDC] so the caller can see if the correction helps here.
+     */
+    public double[] compareDixonColes(List<MatchResult> tournament, double k, double rho) {
+        List<MatchResult> group = new ArrayList<>();
+        List<MatchResult> knockout = new ArrayList<>();
+        for (MatchResult m : tournament) {
+            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            else knockout.add(m);
+        }
+        double noDC = fitAndScore(group, knockout, k, 0.0).brier();
+        double withDC = fitAndScore(group, knockout, k, rho).brier();
+        return new double[]{noDC, withDC};
+    }
+
+    /**
      * Fit ratings on {@code trainSet} (with prior strength k), predict every market for
      * each match in {@code testSet}, and score those against the actual 90-minute outcomes.
      */
     private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet, double k) {
+        return fitAndScore(trainSet, testSet, k, 0.0);
+    }
+
+    private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet,
+                                          double k, double rho) {
         List<TeamRating> ratings = new RatingService(k).fit(trainSet);
         double leagueAvg = RatingService.leagueAverageGoals(trainSet);
-        PoissonMatchModel model = new PoissonMatchModel(leagueAvg);
+        PoissonMatchModel model = new PoissonMatchModel(leagueAvg, rho);
 
         Map<String, TeamRating> byName = new HashMap<>();
         for (TeamRating r : ratings) byName.put(r.team(), r);

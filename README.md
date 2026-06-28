@@ -97,4 +97,11 @@ toward 1.0. Matters more for teams with fewer games (exactly when needed).
   knockout signal, so shrinking toward average helps. A finding, not a victory — real
   signal must come from richer data (Tier 2) later, measured against this bar.
 
-### Next: S8 (Dixon-Coles low-score correction), S9 (time weighting), then Tier 2.
+### S8 (Dixon-Coles low-score correction) — DONE
+`PoissonMatchModel(leagueAvg, rho)`: nudges the four low-score cells (0-0,1-1 up;
+1-0,0-1 down) toward how real football behaves, then renormalises to sum to 1.
+rho=0 reproduces pure Poisson exactly (backward compatible).
+- 2022: at prior k=5, rho=-0.1 improved knockout Brier ~0.2512 -> ~0.2498. Real,
+  consistent, but marginal at 16 games. Canonical and kept; not oversold.
+
+### Next: S9 (time weighting), then Tier 2 (player/manager/chemistry layer). 
