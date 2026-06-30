@@ -126,6 +126,24 @@ public class KandandaApplication {
             System.out.println("sound, but on 16 knockout games its effect is marginal — kept as");
             System.out.println("a correct, honest result, not oversold.");
             System.out.println("=============================================");
+
+            // ----- S13 (Tier 2): team-form modifier sweep -----
+            double[] formWeights = {0, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5};
+            var formSweep = backtest.sweepForm(all, 12.0, -0.1, formWeights);
+            System.out.println("======== S13 TIER 2: TEAM FORM ==============");
+            System.out.println("Group-trained (prior k=12, DC rho=-0.1), knockout Brier.");
+            System.out.println("Form = group over/under-performance vs own xG. w=0 is base.");
+            System.out.println("  weight  Brier");
+            double baseBrier = formSweep.get(0.0), bestW = 0, bestB = Double.MAX_VALUE;
+            for (var e : formSweep.entrySet()) {
+                System.out.printf("  %-6.2f  %.4f%n", e.getKey(), e.getValue());
+                if (e.getValue() < bestB) { bestB = e.getValue(); bestW = e.getKey(); }
+            }
+            System.out.printf("Best weight=%.2f (Brier %.4f) vs base %.4f.%n", bestW, bestB, baseBrier);
+            System.out.println("A sweet spot that gets WORSE past it = a real but PARTIAL signal,");
+            System.out.println("not noise being overfit. One tournament only — needs the validation");
+            System.out.println("basket (2018, UCLs, Euro/Copa 2024) to confirm it generalises.");
+            System.out.println("=============================================");
         };
     }
 

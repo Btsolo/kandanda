@@ -103,13 +103,43 @@ public class BacktestService {
      * Fit ratings on {@code trainSet} (with prior strength k), predict every market for
      * each match in {@code testSet}, and score those against the actual 90-minute outcomes.
      */
+    /**
+     * Sweep the Tier 2 form-modifier weight at fixed prior k and rho, scored on knockouts.
+     * Returns weight -> Brier. weight=0 is the base rate (no form); the sweep shows whether
+     * group-stage form adds real signal and where its calibration sweet spot is.
+     */
+    public java.util.LinkedHashMap<Double, Double> sweepForm(
+            List<MatchResult> tournament, double k, double rho, double[] weights) {
+        List<MatchResult> group = new ArrayList<>();
+        List<MatchResult> knockout = new ArrayList<>();
+        for (MatchResult m : tournament) {
+            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            else knockout.add(m);
+        }
+        var out = new java.util.LinkedHashMap<Double, Double>();
+        for (double w : weights) {
+            var pipeline = new com.kandanda.tier2.ModifierPipeline(
+                    java.util.List.of(new com.kandanda.tier2.FormModifier(w)));
+            out.put(w, fitAndScore(group, knockout, k, rho, pipeline).brier());
+        }
+        return out;
+    }
+
     private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet, double k) {
         return fitAndScore(trainSet, testSet, k, 0.0);
     }
 
     private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet,
                                           double k, double rho) {
+        return fitAndScore(trainSet, testSet, k, rho, com.kandanda.tier2.ModifierPipeline.empty());
+    }
+
+    private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet,
+                                          double k, double rho,
+                                          com.kandanda.tier2.ModifierPipeline pipeline) {
         List<TeamRating> ratings = new RatingService(k).fit(trainSet);
+        // Tier 2: apply rating modifiers (form, etc.) using ONLY the training (group) data.
+        ratings = pipeline.apply(ratings, trainSet);
         double leagueAvg = RatingService.leagueAverageGoals(trainSet);
         PoissonMatchModel model = new PoissonMatchModel(leagueAvg, rho);
 

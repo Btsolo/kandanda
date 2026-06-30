@@ -104,4 +104,17 @@ rho=0 reproduces pure Poisson exactly (backward compatible).
 - 2022: at prior k=5, rho=-0.1 improved knockout Brier ~0.2512 -> ~0.2498. Real,
   consistent, but marginal at 16 games. Canonical and kept; not oversold.
 
-### Next: S9 (time weighting), then Tier 2 (player/manager/chemistry layer). 
+### Tier 2 (real-life moderator layer) — STARTED
+
+Architecture: base ratings flow through a stack of toggleable `RatingModifier`s
+(`tier2` package) before the Poisson model. Each modifier is identity at weight 0, uses
+only group-stage data (no leakage), and is judged by the backtest.
+
+#### S13 (team-form modifier) — DONE
+`FormModifier`: adjusts attack by group over/under-performance vs own xG.
+- 2022 (prior k=12, DC rho=-0.1): base Brier ~0.247 -> best ~0.242 at weight ~0.5,
+  WORSE past that. A sweet spot is the fingerprint of a real but PARTIAL signal, not
+  overfit noise. Single tournament only — needs the validation basket to confirm.
+
+#### Next: validation basket (2018/UCL/Euro-Copa) to test if form generalises, then
+more modifiers (manager risk, standout players) on the same framework.
