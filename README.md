@@ -129,4 +129,24 @@ fits on xG or goals; `BacktestService.compareXg` scores both.
   (ARG dominated KSA on xG yet lost) — matters for the residual analyzer.
 - Also fixed: .gitignore was too broad (`data/` ignored the resource JSON); now `/data/`.
 
-### Next: S14 residual analyzer (the judge), then S15 profile schema.
+### BUGFIX: robust group/knockout split
+The split was hard-coded to Matchday 1/2/3, which silently mis-split StatsBomb data
+(labelled Matchday 1..13) into 8 group + 56 knockout instead of 48 + 16. This flattered
+the xG result. Fixed: `BacktestService.isGroupStage` = "starts with Matchday". Guarded
+by tests. Honest re-validation: xG is roughly a WASH with goals as a raw rating input
+(marginally better at k=5, marginally worse at k=8-12). xG's value is INFRASTRUCTURE for
+the residual analyzer, not a standalone rating win.
+
+### S14 (residual analyzer — the judge) — DONE
+`com.kandanda.analysis`: the instrument that separates skill from luck.
+- `ResidualAnalyzer` fits xG-based ratings, then per team computes:
+  CREATION residual (xG - expected xG) = skill, tends to persist;
+  FINISHING residual (goals - xG) = luck, regresses to mean.
+- `TeamResidual` classifies teams (underrated / lucky / creating).
+- 2022 validation (real data): Germany top creator but finished cold (went out unlucky);
+  Spain biggest over-finisher on thin creation (regressed, out in R16); Morocco
+  over-finished AND under-created (run outran underlying numbers). The judge tells true
+  stories goals hide.
+- This is the referee every Tier 2 hypothesis must answer to.
+
+### Next: S15 profile schema (position-aware, two-provenance, FM-informed).

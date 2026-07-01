@@ -32,8 +32,21 @@ import java.util.*;
  */
 public class BacktestService {
 
-    private static final Set<String> GROUP_ROUNDS =
-            Set.of("Matchday 1", "Matchday 2", "Matchday 3");
+    /**
+     * Whether a round label denotes a GROUP-stage match. Robust to different datasets:
+     * StatsBomb labels group games "Matchday 1".."Matchday 13" (sequential across all
+     * groups), openfootball used "Matchday 1/2/3". Both — and any future scheme that
+     * names group rounds "Matchday N" — count as group. Everything else (Round of 16,
+     * Quarter-finals, Semi-finals, Final, third-place) is knockout.
+     *
+     * <p>This centralises the split in ONE place. A previous bug had the group set
+     * hard-coded to only Matchday 1/2/3, which silently mis-split the StatsBomb data
+     * (8 "group" + 56 "knockout" instead of 48 + 16). Keeping the rule here prevents
+     * that class of drift.
+     */
+    static boolean isGroupStage(String round) {
+        return round != null && round.startsWith("Matchday");
+    }
 
     private final CalibrationService scoreboard = new CalibrationService();
 
@@ -48,7 +61,7 @@ public class BacktestService {
         List<MatchResult> group = new ArrayList<>();
         List<MatchResult> knockout = new ArrayList<>();
         for (MatchResult m : tournament) {
-            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            if (isGroupStage(m.getRound())) group.add(m);
             else knockout.add(m);
         }
         if (group.isEmpty() || knockout.isEmpty()) {
@@ -73,7 +86,7 @@ public class BacktestService {
         List<MatchResult> group = new ArrayList<>();
         List<MatchResult> knockout = new ArrayList<>();
         for (MatchResult m : tournament) {
-            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            if (isGroupStage(m.getRound())) group.add(m);
             else knockout.add(m);
         }
         var out = new java.util.LinkedHashMap<Double, Double>();
@@ -91,7 +104,7 @@ public class BacktestService {
         List<MatchResult> group = new ArrayList<>();
         List<MatchResult> knockout = new ArrayList<>();
         for (MatchResult m : tournament) {
-            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            if (isGroupStage(m.getRound())) group.add(m);
             else knockout.add(m);
         }
         double noDC = fitAndScore(group, knockout, k, 0.0).brier();
@@ -113,7 +126,7 @@ public class BacktestService {
         List<MatchResult> group = new ArrayList<>();
         List<MatchResult> knockout = new ArrayList<>();
         for (MatchResult m : tournament) {
-            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            if (isGroupStage(m.getRound())) group.add(m);
             else knockout.add(m);
         }
         var out = new java.util.LinkedHashMap<Double, Double>();
@@ -133,7 +146,7 @@ public class BacktestService {
         List<MatchResult> group = new ArrayList<>();
         List<MatchResult> knockout = new ArrayList<>();
         for (MatchResult m : tournament) {
-            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            if (isGroupStage(m.getRound())) group.add(m);
             else knockout.add(m);
         }
         double goals = fitAndScore(group, knockout, k, rho,

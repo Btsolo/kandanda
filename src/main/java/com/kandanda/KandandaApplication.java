@@ -157,14 +157,42 @@ public class KandandaApplication {
                     String win = cmp[1] < cmp[0] ? "xG" : "goals";
                     System.out.printf("  k=%-5.0f  %.4f  %.4f  %s%n", k, cmp[0], cmp[1], win);
                 }
-                System.out.println("Verdict: xG is a real but INCREMENTAL gain (biggest at low prior;");
-                System.out.println("shrinkage already tames variance at high prior). Its bigger value is");
-                System.out.println("per-game truth on high-variance matches (e.g. ARG dominated KSA on xG");
-                System.out.println("yet lost) — which matters for the residual analyzer next.");
+                System.out.println("Verdict (honest, correct 48/16 split): as a raw team-rating input");
+                System.out.println("on one tournament, xG is roughly a WASH with goals — marginally");
+                System.out.println("better only at low prior (k=5), marginally worse at the priors we");
+                System.out.println("actually use (k=8-12). xG's real value is NOT here in the aggregate");
+                System.out.println("Brier, but in the per-game creation-vs-finishing split the residual");
+                System.out.println("analyzer (S14) needs — e.g. ARG dominated KSA on xG yet lost. So xG");
+                System.out.println("is kept as INFRASTRUCTURE for S14, not as a standalone rating win.");
             } else {
                 System.out.println("No xG in this dataset — falls back to goals cleanly.");
             }
             System.out.println("=============================================");
+
+            // ----- S14: residual analyzer (the judge) on the group stage -----
+            List<MatchResult> groupMatches = all.stream()
+                    .filter(mm -> mm.getRound() != null && mm.getRound().startsWith("Matchday"))
+                    .toList();
+            if (!groupMatches.isEmpty() && groupMatches.stream().anyMatch(MatchResult::hasXg)) {
+                var analyzer = new com.kandanda.analysis.ResidualAnalyzer(12.0);
+                var residuals = analyzer.analyse(groupMatches);
+                System.out.println("======== S14 RESIDUAL ANALYZER (JUDGE) ======");
+                System.out.printf("Group stage (%d matches). Creation = xG vs expected (SKILL).%n",
+                        groupMatches.size());
+                System.out.println("Finishing = goals vs xG (LUCK, regresses). Read separates them.");
+                System.out.println("--- top 5 creators (genuinely outplaying expectation) ---");
+                residuals.stream().limit(5).forEach(r -> System.out.println("   " + r));
+                System.out.println("--- biggest over-finishers (riding luck, due to regress) ---");
+                residuals.stream()
+                        .sorted(java.util.Comparator.comparingDouble(
+                                com.kandanda.analysis.TeamResidual::finishingMean).reversed())
+                        .limit(3)
+                        .forEach(r -> System.out.println("   " + r));
+                System.out.println("This judge is what every Tier 2 hypothesis must answer to:");
+                System.out.println("a claim 'team X is underrated' must show a real, consistent");
+                System.out.println("positive creation residual — not just one lucky result.");
+                System.out.println("=============================================");
+            }
         };
     }
 

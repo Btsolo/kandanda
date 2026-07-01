@@ -44,6 +44,36 @@ class BacktestServiceTest {
     }
 
     @Test
+    void isGroupStageRecognisesAllMatchdayNumbers() {
+        // Regression guard for a real bug: the split was once hard-coded to only
+        // Matchday 1/2/3, silently mis-splitting StatsBomb data (Matchday 1..13).
+        // Any "Matchday N" is group; knockout labels are not.
+        for (int n = 1; n <= 13; n++) {
+            assertTrue(BacktestService.isGroupStage("Matchday " + n),
+                    "Matchday " + n + " should be group stage");
+        }
+        assertFalse(BacktestService.isGroupStage("Round of 16"));
+        assertFalse(BacktestService.isGroupStage("Quarter-finals"));
+        assertFalse(BacktestService.isGroupStage("Semi-finals"));
+        assertFalse(BacktestService.isGroupStage("Final"));
+        assertFalse(BacktestService.isGroupStage("Match for third place"));
+        assertFalse(BacktestService.isGroupStage(null));
+    }
+
+    @Test
+    void splitCountsMatchdaysBeyondThreeAsGroup() {
+        // A tournament using Matchday 4..13 must still split correctly.
+        List<MatchResult> t = new ArrayList<>();
+        t.add(m("Matchday 4", "A", "B", 1, 0));
+        t.add(m("Matchday 11", "C", "D", 2, 1));
+        t.add(m("Matchday 1", "A", "C", 1, 1));
+        t.add(m("Round of 16", "A", "D", 2, 0));
+        var result = new BacktestService().run(t);
+        assertEquals(3, result.groupMatches(), "3 Matchday games should be group");
+        assertEquals(1, result.knockoutMatches(), "1 Round of 16 game should be knockout");
+    }
+
+    @Test
     void splitsGroupAndKnockout() {
         var result = new BacktestService().run(miniTournament());
         assertEquals(6, result.groupMatches());
