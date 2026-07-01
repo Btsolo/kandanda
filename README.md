@@ -118,3 +118,15 @@ only group-stage data (no leakage), and is judged by the backtest.
 
 #### Next: validation basket (2018/UCL/Euro-Copa) to test if form generalises, then
 more modifiers (manager risk, standout players) on the same framework.
+
+### S14-data (xG as Poisson input) — DONE
+2022 per-match xG sourced from StatsBomb Open Data (comp 43, season 106; penalty-
+shootout shots excluded). `MatchResult` gained nullable xG; `RatingService(k, useXg)`
+fits on xG or goals; `BacktestService.compareXg` scores both.
+- Result: xG is a REAL but INCREMENTAL gain — beats goals at low prior (0.2387 vs
+  0.2401 at k=5), edge shrinks at high prior (shrinkage already tames variance).
+  Kept, not oversold. Bigger value is per-game truth on high-variance games
+  (ARG dominated KSA on xG yet lost) — matters for the residual analyzer.
+- Also fixed: .gitignore was too broad (`data/` ignored the resource JSON); now `/data/`.
+
+### Next: S14 residual analyzer (the judge), then S15 profile schema.

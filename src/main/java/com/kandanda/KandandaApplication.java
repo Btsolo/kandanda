@@ -144,6 +144,27 @@ public class KandandaApplication {
             System.out.println("not noise being overfit. One tournament only — needs the validation");
             System.out.println("basket (2018, UCLs, Euro/Copa 2024) to confirm it generalises.");
             System.out.println("=============================================");
+
+            // ----- S14-data: xG vs goals as the model input -----
+            long withXg = all.stream().filter(MatchResult::hasXg).count();
+            System.out.println("============ S14-DATA: xG vs GOALS ===========");
+            System.out.printf("%d/%d matches carry xG.%n", withXg, all.size());
+            if (withXg > 0) {
+                System.out.println("Group-trained, scored on knockout GOAL outcomes. Lower Brier better.");
+                System.out.println("  prior k | goals  | xG     | winner");
+                for (double k : new double[]{5, 8, 12, 20}) {
+                    double[] cmp = backtest.compareXg(all, k, -0.1);
+                    String win = cmp[1] < cmp[0] ? "xG" : "goals";
+                    System.out.printf("  k=%-5.0f  %.4f  %.4f  %s%n", k, cmp[0], cmp[1], win);
+                }
+                System.out.println("Verdict: xG is a real but INCREMENTAL gain (biggest at low prior;");
+                System.out.println("shrinkage already tames variance at high prior). Its bigger value is");
+                System.out.println("per-game truth on high-variance matches (e.g. ARG dominated KSA on xG");
+                System.out.println("yet lost) — which matters for the residual analyzer next.");
+            } else {
+                System.out.println("No xG in this dataset — falls back to goals cleanly.");
+            }
+            System.out.println("=============================================");
         };
     }
 

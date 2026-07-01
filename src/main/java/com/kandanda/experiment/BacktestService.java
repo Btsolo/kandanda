@@ -125,6 +125,24 @@ public class BacktestService {
         return out;
     }
 
+    /**
+     * Compare goals-based vs xG-based model at a fixed prior and rho, scored on knockouts.
+     * Returns [brierGoals, brierXg] so the caller can see whether xG helps here.
+     */
+    public double[] compareXg(List<MatchResult> tournament, double k, double rho) {
+        List<MatchResult> group = new ArrayList<>();
+        List<MatchResult> knockout = new ArrayList<>();
+        for (MatchResult m : tournament) {
+            if (GROUP_ROUNDS.contains(m.getRound())) group.add(m);
+            else knockout.add(m);
+        }
+        double goals = fitAndScore(group, knockout, k, rho,
+                com.kandanda.tier2.ModifierPipeline.empty(), false).brier();
+        double xg = fitAndScore(group, knockout, k, rho,
+                com.kandanda.tier2.ModifierPipeline.empty(), true).brier();
+        return new double[]{goals, xg};
+    }
+
     private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet, double k) {
         return fitAndScore(trainSet, testSet, k, 0.0);
     }
@@ -137,10 +155,18 @@ public class BacktestService {
     private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet,
                                           double k, double rho,
                                           com.kandanda.tier2.ModifierPipeline pipeline) {
-        List<TeamRating> ratings = new RatingService(k).fit(trainSet);
+        return fitAndScore(trainSet, testSet, k, rho, pipeline, false);
+    }
+
+    private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet,
+                                          double k, double rho,
+                                          com.kandanda.tier2.ModifierPipeline pipeline,
+                                          boolean useXg) {
+        RatingService ratingService = new RatingService(k, useXg);
+        List<TeamRating> ratings = ratingService.fit(trainSet);
         // Tier 2: apply rating modifiers (form, etc.) using ONLY the training (group) data.
         ratings = pipeline.apply(ratings, trainSet);
-        double leagueAvg = RatingService.leagueAverageGoals(trainSet);
+        double leagueAvg = ratingService.leagueAverage(trainSet);
         PoissonMatchModel model = new PoissonMatchModel(leagueAvg, rho);
 
         Map<String, TeamRating> byName = new HashMap<>();

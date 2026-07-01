@@ -6,7 +6,7 @@ target/
 *.iml
 
 # H2 database files - generated data, not source
-data/
+/data/
 *.mv.db
 *.trace.db
 

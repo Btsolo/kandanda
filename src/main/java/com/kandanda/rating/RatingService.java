@@ -53,16 +53,58 @@ public class RatingService {
      */
     private final double priorStrength;
 
-    /** Default: no prior (k=0), preserving the original raw-rating behaviour. */
+    /**
+     * When true, fit on expected goals (xG) instead of actual goals — a cleaner
+     * scoring-rate signal that strips finishing variance. Falls back to goals per-match
+     * if a match lacks xG. Default false preserves original goals-based behaviour.
+     *
+     * <p>2022 finding: at sensible priors (k=5-12) xG modestly beats goals on knockout
+     * calibration (e.g. 0.2387 vs 0.2401 at k=5); the edge shrinks at high prior because
+     * shrinkage already tames the variance xG removes. Real but incremental — kept, not
+     * oversold. xG's bigger value is per-game correctness on high-variance matches
+     * (e.g. ARG dominated KSA on xG yet lost), which matters for the residual/profile work.
+     */
+    private final boolean useXg;
+
+    /** Default: no prior (k=0), goals-based, preserving the original behaviour. */
     public RatingService() {
-        this(0.0);
+        this(0.0, false);
     }
 
     public RatingService(double priorStrength) {
+        this(priorStrength, false);
+    }
+
+    public RatingService(double priorStrength, boolean useXg) {
         if (priorStrength < 0) {
             throw new IllegalArgumentException("priorStrength (k) must be >= 0");
         }
         this.priorStrength = priorStrength;
+        this.useXg = useXg;
+    }
+
+    /** Home-side scoring value for the fit: xG if enabled and present, else goals. */
+    private double homeScore(MatchResult m) {
+        return (useXg && m.hasXg()) ? m.getHomeXg() : m.getHomeGoals();
+    }
+
+    /** Away-side scoring value for the fit: xG if enabled and present, else goals. */
+    private double awayScore(MatchResult m) {
+        return (useXg && m.hasXg()) ? m.getAwayXg() : m.getAwayGoals();
+    }
+
+    /**
+     * League average scoring value per team per game, over the given matches. Uses xG
+     * when this service is in xG mode (and xG is present), else goals. Instance method
+     * because the average must match the signal the ratings are fitted on.
+     */
+    public double leagueAverage(List<MatchResult> matches) {
+        if (matches == null || matches.isEmpty()) {
+            throw new IllegalArgumentException("No matches");
+        }
+        double total = 0;
+        for (MatchResult m : matches) total += homeScore(m) + awayScore(m);
+        return total / (2.0 * matches.size());
     }
 
     /**
@@ -98,8 +140,8 @@ public class RatingService {
             teams.add(m.getAwayTeam().getName());
         }
 
-        // League average goals scored by one team in one game (single source of truth).
-        double avg = leagueAverageGoals(matches);
+        // League average scoring per team per game (goals or xG per mode) — single source.
+        double avg = leagueAverage(matches);
         // Additive-smoothing prior: k phantom average games (k=0 => no prior).
         double prior = priorStrength * avg;
 
@@ -133,11 +175,11 @@ public class RatingService {
                 String home = m.getHomeTeam().getName();
                 String away = m.getAwayTeam().getName();
                 if (home.equals(t)) {
-                    scored += m.getHomeGoals();
+                    scored += homeScore(m);
                     expected += defence.get(away) * avg;
                 }
                 if (away.equals(t)) {
-                    scored += m.getAwayGoals();
+                    scored += awayScore(m);
                     expected += defence.get(home) * avg;
                 }
             }
@@ -160,11 +202,11 @@ public class RatingService {
                 String home = m.getHomeTeam().getName();
                 String away = m.getAwayTeam().getName();
                 if (home.equals(t)) {
-                    conceded += m.getAwayGoals();
+                    conceded += awayScore(m);
                     expected += attack.get(away) * avg;
                 }
                 if (away.equals(t)) {
-                    conceded += m.getHomeGoals();
+                    conceded += homeScore(m);
                     expected += attack.get(home) * avg;
                 }
             }

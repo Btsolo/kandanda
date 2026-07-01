@@ -39,6 +39,53 @@ class RatingServiceTest {
         return ms;
     }
 
+    /** Match with xG, for xG-mode tests. */
+    private MatchResult matchXg(String home, String away, int hg, int ag, double hx, double ax) {
+        return new MatchResult("TEST", "R1", null,
+                new Team(home), new Team(away), hg, ag, hx, ax);
+    }
+
+    @Test
+    void xgModeUsesXgNotGoals() {
+        // A beat B 0-3 on GOALS but dominated 3.0-0.2 on xG. In xG mode, A should rate
+        // ABOVE B for attack — the opposite of what goals alone would say. This is the
+        // Argentina-Saudi case in miniature.
+        var matches = List.of(
+                matchXg("A", "B", 0, 3, 3.0, 0.2),
+                matchXg("B", "A", 3, 0, 0.2, 3.0));
+        var xgService = new RatingService(0.0, true);
+        Map<String, TeamRating> r = xgService.fit(matches).stream()
+                .collect(Collectors.toMap(TeamRating::team, x -> x));
+        assertTrue(r.get("A").attack() > r.get("B").attack(),
+                "in xG mode, the xG-dominant team A should out-rate B on attack");
+    }
+
+    @Test
+    void goalsModeIgnoresXg() {
+        // Same matches, goals mode: B outscored A 6-0 on goals, so B should out-rate A.
+        var matches = List.of(
+                matchXg("A", "B", 0, 3, 3.0, 0.2),
+                matchXg("B", "A", 3, 0, 0.2, 3.0));
+        var goalsService = new RatingService(0.0, false);
+        Map<String, TeamRating> r = goalsService.fit(matches).stream()
+                .collect(Collectors.toMap(TeamRating::team, x -> x));
+        assertTrue(r.get("B").attack() > r.get("A").attack(),
+                "in goals mode, the higher-scoring team B should out-rate A");
+    }
+
+    @Test
+    void xgModeFallsBackToGoalsWhenXgMissing() {
+        // No xG present: xG mode must behave exactly like goals mode.
+        var xgService = new RatingService(5.0, true);
+        var goalsService = new RatingService(5.0, false);
+        var a = xgService.fit(syntheticLeague());
+        var b = goalsService.fit(syntheticLeague());
+        // Same ordering and values, since the synthetic league has no xG.
+        assertEquals(b.size(), a.size());
+        assertEquals(b.get(0).team(), a.get(0).team());
+        assertEquals(b.get(0).attack(), a.get(0).attack(), 1e-9);
+    }
+
     @Test
     void recoversKnownHierarchy() {
         Map<String, TeamRating> r = service.fit(syntheticLeague()).stream()
