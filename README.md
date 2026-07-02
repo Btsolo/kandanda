@@ -149,4 +149,22 @@ the residual analyzer, not a standalone rating win.
   stories goals hide.
 - This is the referee every Tier 2 hypothesis must answer to.
 
-### Next: S15 profile schema (position-aware, two-provenance, FM-informed).
+### S15 (profile schema) — DONE
+`com.kandanda.profile`: the home for the football knowledge, reverse-engineered from
+Football Manager's structure (doc 04 §4b) rather than invented.
+- `PlayerProfile` physically separates the two provenances as nested types:
+  `DataDerived` (measured, per-90, nullable — fill what sources provide) and
+  `JudgmentDerived` (talismanResponsibility, bigMatchTemperament, roleFit — the
+  developer's reads; FM's "hidden attributes"). You cannot construct a profile without
+  declaring which claims are measured and which are judged.
+- Key convergence: FM's "Important Matches" = bigMatchTemperament; FM's "Consistency" =
+  what the S14 residual analyzer MEASURES — the analyzer is an instrument for estimating
+  FM-style hidden attributes from real data.
+- `TeamProfile`: starDependence spectrum (H2, system↔star), chemistry (H4),
+  eliteWideQuality (H1 low-block breaker), talisman link.
+- `ManagerProfile`: risk axis only (minimal slice; tactical identity deferred).
+- All judged values range-checked; neutral() factories make "no claims" the default.
+- Every profile value is a HYPOTHESIS until a modifier using it passes the judge.
+
+### Next: S16 first talisman modifier (lineup x starDependence), judged by scoreboard +
+residual analyzer. Then S17 validation basket.
