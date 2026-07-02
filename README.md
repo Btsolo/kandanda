@@ -178,5 +178,16 @@ First judgment-derived attribute before the judge — and the judge's first real
   lineups will use), `TalismanAbsence`, `TalismanEffect`, `Profiles2022` seed reads
   (assistant-proposed, developer to sanity-check).
 
-### Next: S17 validation basket (2018/UCL/Euro-Copa) — do form + signed-talisman
-replicate? Then more profile modifiers on the same frame.
+### S17 (validation basket: WC-2018) — DONE, and the biggest finding so far
+2018 loaded via the same StatsBomb-xG pipeline (48/16 split handled by the robust
+isGroupStage — the S14 bugfix paying off).
+- FORM FAILED REPLICATION: on 2022 form improved to a sweet spot (0.2378 -> 0.2298 at
+  w=0.75); on 2018 it gets monotonically WORSE at every weight (0.2364 -> 0.2727 at
+  w=1.0). The 2022 fingerprint was one tournament fooling us. Group form -> knockout
+  carryover is NOT a stable cross-tournament signal.
+- FormModifier stays as infrastructure but is NOT part of the trusted model.
+- This is the instrument working as designed: a promising signal died honestly on
+  out-of-sample data instead of shipping. (Klement lesson enforced by machinery.)
+
+### Next: more basket tournaments (Euros/Copa) to grow the test bed; residuals on 2018;
+2026 live forward test with locked pre-match predictions.

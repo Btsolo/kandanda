@@ -29,6 +29,7 @@ public class KandandaApplication {
     CommandLineRunner loadData(TournamentLoader loader, MatchResultRepository matchRepo) {
         return args -> {
             int n = loader.load("data/worldcup-2022.json", "WC-2022");
+            int n18 = loader.load("data/worldcup-2018.json", "WC-2018");
             long total = matchRepo.countByTournament("WC-2022");
             System.out.println("================ S2 DATA LOAD ================");
             System.out.println("Newly stored this run : " + n + " matches");
@@ -219,6 +220,28 @@ public class KandandaApplication {
                 System.out.println("marginally better: consistent with H3. Only 2 affected matches, so");
                 System.out.println("direction over magnitude; 2026 lineups give the real test.");
                 System.out.println("=============================================");
+
+                // ----- S17: validation basket — does form REPLICATE on 2018? -----
+                List<MatchResult> wc18 = matchRepo.findByTournamentOrderByDateAsc("WC-2018");
+                if (!wc18.isEmpty()) {
+                    double[] fw17 = {0, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5};
+                    var f22 = backtest.sweepForm(all, 12.0, -0.1, fw17);
+                    var f18 = backtest.sweepForm(wc18, 12.0, -0.1, fw17);
+                    System.out.println("===== S17 VALIDATION BASKET: FORM REPLICATION =====");
+                    System.out.println("Same method, two tournaments, independently (no cross-leakage).");
+                    System.out.println("  weight | WC-2022 | WC-2018");
+                    for (double w : fw17) {
+                        System.out.printf("  %-6.2f  %.4f   %.4f%n", w, f22.get(w), f18.get(w));
+                    }
+                    System.out.println("VERDICT: form FAILED replication. 2022 improved to a sweet spot");
+                    System.out.println("(~w=0.75); 2018 gets monotonically WORSE with any form weight.");
+                    System.out.println("The 2022 'sweet-spot fingerprint' was one tournament fooling us.");
+                    System.out.println("Group form -> knockout carryover is NOT a stable signal across");
+                    System.out.println("World Cups. FormModifier stays in the codebase as infrastructure,");
+                    System.out.println("but is NOT part of the trusted model. This is the instrument");
+                    System.out.println("working: a promising signal died honestly before shipping.");
+                    System.out.println("=============================================");
+                }
             }
         };
     }

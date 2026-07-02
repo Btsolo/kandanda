@@ -1,0 +1,1029 @@
+{
+ "name": "World Cup 2018",
+ "matches": [
+  {
+   "round": "Matchday 1",
+   "date": "2018-06-14",
+   "team1": "Russia",
+   "team2": "Saudi Arabia",
+   "score": {
+    "ft": [
+     5,
+     0
+    ]
+   },
+   "xg": [
+    1.282,
+    0.249
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2018-06-15",
+   "team1": "Egypt",
+   "team2": "Uruguay",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    0.364,
+    1.941
+   ]
+  },
+  {
+   "round": "Matchday 6",
+   "date": "2018-06-19",
+   "team1": "Russia",
+   "team2": "Egypt",
+   "score": {
+    "ft": [
+     3,
+     1
+    ]
+   },
+   "xg": [
+    0.981,
+    1.698
+   ]
+  },
+  {
+   "round": "Matchday 7",
+   "date": "2018-06-20",
+   "team1": "Uruguay",
+   "team2": "Saudi Arabia",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    1.807,
+    0.273
+   ]
+  },
+  {
+   "round": "Matchday 12",
+   "date": "2018-06-25",
+   "team1": "Uruguay",
+   "team2": "Russia",
+   "score": {
+    "ft": [
+     3,
+     0
+    ]
+   },
+   "xg": [
+    2.483,
+    0.18
+   ]
+  },
+  {
+   "round": "Matchday 12",
+   "date": "2018-06-25",
+   "team1": "Saudi Arabia",
+   "team2": "Egypt",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    2.546,
+    0.924
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2018-06-15",
+   "team1": "Morocco",
+   "team2": "Iran",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    1.059,
+    0.698
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2018-06-15",
+   "team1": "Portugal",
+   "team2": "Spain",
+   "score": {
+    "ft": [
+     3,
+     3
+    ]
+   },
+   "xg": [
+    1.435,
+    1.661
+   ]
+  },
+  {
+   "round": "Matchday 7",
+   "date": "2018-06-20",
+   "team1": "Portugal",
+   "team2": "Morocco",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    0.885,
+    1.455
+   ]
+  },
+  {
+   "round": "Matchday 7",
+   "date": "2018-06-20",
+   "team1": "Iran",
+   "team2": "Spain",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    0.426,
+    2.197
+   ]
+  },
+  {
+   "round": "Matchday 12",
+   "date": "2018-06-25",
+   "team1": "Iran",
+   "team2": "Portugal",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.577,
+    1.522
+   ]
+  },
+  {
+   "round": "Matchday 12",
+   "date": "2018-06-25",
+   "team1": "Spain",
+   "team2": "Morocco",
+   "score": {
+    "ft": [
+     2,
+     2
+    ]
+   },
+   "xg": [
+    2.604,
+    1.072
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2018-06-16",
+   "team1": "France",
+   "team2": "Australia",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    1.562,
+    0.98
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2018-06-16",
+   "team1": "Peru",
+   "team2": "Denmark",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    1.926,
+    1.122
+   ]
+  },
+  {
+   "round": "Matchday 8",
+   "date": "2018-06-21",
+   "team1": "Denmark",
+   "team2": "Australia",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.014,
+    1.412
+   ]
+  },
+  {
+   "round": "Matchday 8",
+   "date": "2018-06-21",
+   "team1": "France",
+   "team2": "Peru",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    1.862,
+    0.625
+   ]
+  },
+  {
+   "round": "Matchday 13",
+   "date": "2018-06-26",
+   "team1": "Denmark",
+   "team2": "France",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    0.139,
+    0.418
+   ]
+  },
+  {
+   "round": "Matchday 13",
+   "date": "2018-06-26",
+   "team1": "Australia",
+   "team2": "Peru",
+   "score": {
+    "ft": [
+     0,
+     2
+    ]
+   },
+   "xg": [
+    1.629,
+    0.336
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2018-06-16",
+   "team1": "Argentina",
+   "team2": "Iceland",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    2.081,
+    1.032
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2018-06-16",
+   "team1": "Croatia",
+   "team2": "Nigeria",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    1.694,
+    0.762
+   ]
+  },
+  {
+   "round": "Matchday 8",
+   "date": "2018-06-21",
+   "team1": "Argentina",
+   "team2": "Croatia",
+   "score": {
+    "ft": [
+     0,
+     3
+    ]
+   },
+   "xg": [
+    1.218,
+    1.832
+   ]
+  },
+  {
+   "round": "Matchday 9",
+   "date": "2018-06-22",
+   "team1": "Nigeria",
+   "team2": "Iceland",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    1.312,
+    1.552
+   ]
+  },
+  {
+   "round": "Matchday 13",
+   "date": "2018-06-26",
+   "team1": "Nigeria",
+   "team2": "Argentina",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    1.305,
+    0.851
+   ]
+  },
+  {
+   "round": "Matchday 13",
+   "date": "2018-06-26",
+   "team1": "Iceland",
+   "team2": "Croatia",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    2.133,
+    0.674
+   ]
+  },
+  {
+   "round": "Matchday 4",
+   "date": "2018-06-17",
+   "team1": "Costa Rica",
+   "team2": "Serbia",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    0.596,
+    1.993
+   ]
+  },
+  {
+   "round": "Matchday 4",
+   "date": "2018-06-17",
+   "team1": "Brazil",
+   "team2": "Switzerland",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.867,
+    0.472
+   ]
+  },
+  {
+   "round": "Matchday 9",
+   "date": "2018-06-22",
+   "team1": "Brazil",
+   "team2": "Costa Rica",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    3.096,
+    0.159
+   ]
+  },
+  {
+   "round": "Matchday 9",
+   "date": "2018-06-22",
+   "team1": "Serbia",
+   "team2": "Switzerland",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    1.153,
+    1.557
+   ]
+  },
+  {
+   "round": "Matchday 14",
+   "date": "2018-06-27",
+   "team1": "Serbia",
+   "team2": "Brazil",
+   "score": {
+    "ft": [
+     0,
+     2
+    ]
+   },
+   "xg": [
+    0.948,
+    1.42
+   ]
+  },
+  {
+   "round": "Matchday 14",
+   "date": "2018-06-27",
+   "team1": "Switzerland",
+   "team2": "Costa Rica",
+   "score": {
+    "ft": [
+     2,
+     2
+    ]
+   },
+   "xg": [
+    1.22,
+    1.576
+   ]
+  },
+  {
+   "round": "Matchday 4",
+   "date": "2018-06-17",
+   "team1": "Germany",
+   "team2": "Mexico",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    2.299,
+    0.993
+   ]
+  },
+  {
+   "round": "Matchday 5",
+   "date": "2018-06-18",
+   "team1": "Sweden",
+   "team2": "South Korea",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    2.015,
+    0.414
+   ]
+  },
+  {
+   "round": "Matchday 10",
+   "date": "2018-06-23",
+   "team1": "South Korea",
+   "team2": "Mexico",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    0.822,
+    1.878
+   ]
+  },
+  {
+   "round": "Matchday 10",
+   "date": "2018-06-23",
+   "team1": "Germany",
+   "team2": "Sweden",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    1.318,
+    0.815
+   ]
+  },
+  {
+   "round": "Matchday 14",
+   "date": "2018-06-27",
+   "team1": "South Korea",
+   "team2": "Germany",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    1.775,
+    2.706
+   ]
+  },
+  {
+   "round": "Matchday 14",
+   "date": "2018-06-27",
+   "team1": "Mexico",
+   "team2": "Sweden",
+   "score": {
+    "ft": [
+     0,
+     3
+    ]
+   },
+   "xg": [
+    1.611,
+    2.79
+   ]
+  },
+  {
+   "round": "Matchday 5",
+   "date": "2018-06-18",
+   "team1": "Belgium",
+   "team2": "Panama",
+   "score": {
+    "ft": [
+     3,
+     0
+    ]
+   },
+   "xg": [
+    1.212,
+    0.625
+   ]
+  },
+  {
+   "round": "Matchday 5",
+   "date": "2018-06-18",
+   "team1": "Tunisia",
+   "team2": "England",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    0.946,
+    2.626
+   ]
+  },
+  {
+   "round": "Matchday 10",
+   "date": "2018-06-23",
+   "team1": "Belgium",
+   "team2": "Tunisia",
+   "score": {
+    "ft": [
+     5,
+     2
+    ]
+   },
+   "xg": [
+    5.336,
+    1.188
+   ]
+  },
+  {
+   "round": "Matchday 11",
+   "date": "2018-06-24",
+   "team1": "England",
+   "team2": "Panama",
+   "score": {
+    "ft": [
+     6,
+     1
+    ]
+   },
+   "xg": [
+    3.168,
+    1.08
+   ]
+  },
+  {
+   "round": "Matchday 15",
+   "date": "2018-06-28",
+   "team1": "England",
+   "team2": "Belgium",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    1.201,
+    0.965
+   ]
+  },
+  {
+   "round": "Matchday 15",
+   "date": "2018-06-28",
+   "team1": "Panama",
+   "team2": "Tunisia",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    0.691,
+    2.852
+   ]
+  },
+  {
+   "round": "Matchday 6",
+   "date": "2018-06-19",
+   "team1": "Colombia",
+   "team2": "Japan",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    0.806,
+    2.321
+   ]
+  },
+  {
+   "round": "Matchday 6",
+   "date": "2018-06-19",
+   "team1": "Poland",
+   "team2": "Senegal",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    1.042,
+    1.428
+   ]
+  },
+  {
+   "round": "Matchday 11",
+   "date": "2018-06-24",
+   "team1": "Japan",
+   "team2": "Senegal",
+   "score": {
+    "ft": [
+     2,
+     2
+    ]
+   },
+   "xg": [
+    0.982,
+    1.878
+   ]
+  },
+  {
+   "round": "Matchday 11",
+   "date": "2018-06-24",
+   "team1": "Poland",
+   "team2": "Colombia",
+   "score": {
+    "ft": [
+     0,
+     3
+    ]
+   },
+   "xg": [
+    1.114,
+    1.387
+   ]
+  },
+  {
+   "round": "Matchday 15",
+   "date": "2018-06-28",
+   "team1": "Japan",
+   "team2": "Poland",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    0.891,
+    1.041
+   ]
+  },
+  {
+   "round": "Matchday 15",
+   "date": "2018-06-28",
+   "team1": "Senegal",
+   "team2": "Colombia",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    0.361,
+    0.285
+   ]
+  },
+  {
+   "round": "Round of 16",
+   "date": "2018-06-30",
+   "team1": "France",
+   "team2": "Argentina",
+   "score": {
+    "ft": [
+     4,
+     3
+    ]
+   },
+   "xg": [
+    1.638,
+    1.447
+   ]
+  },
+  {
+   "round": "Round of 16",
+   "date": "2018-06-30",
+   "team1": "Uruguay",
+   "team2": "Portugal",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    0.476,
+    0.996
+   ]
+  },
+  {
+   "round": "Round of 16",
+   "date": "2018-07-01",
+   "team1": "Spain",
+   "team2": "Russia",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.441,
+    1.406
+   ]
+  },
+  {
+   "round": "Round of 16",
+   "date": "2018-07-01",
+   "team1": "Croatia",
+   "team2": "Denmark",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    2.17,
+    0.696
+   ]
+  },
+  {
+   "round": "Round of 16",
+   "date": "2018-07-02",
+   "team1": "Brazil",
+   "team2": "Mexico",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    3.32,
+    0.583
+   ]
+  },
+  {
+   "round": "Round of 16",
+   "date": "2018-07-02",
+   "team1": "Belgium",
+   "team2": "Japan",
+   "score": {
+    "ft": [
+     3,
+     2
+    ]
+   },
+   "xg": [
+    2.918,
+    0.694
+   ]
+  },
+  {
+   "round": "Round of 16",
+   "date": "2018-07-03",
+   "team1": "Sweden",
+   "team2": "Switzerland",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    0.91,
+    0.533
+   ]
+  },
+  {
+   "round": "Round of 16",
+   "date": "2018-07-03",
+   "team1": "Colombia",
+   "team2": "England",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    0.831,
+    2.244
+   ]
+  },
+  {
+   "round": "Quarter-finals",
+   "date": "2018-07-06",
+   "team1": "Uruguay",
+   "team2": "France",
+   "score": {
+    "ft": [
+     0,
+     2
+    ]
+   },
+   "xg": [
+    0.693,
+    0.539
+   ]
+  },
+  {
+   "round": "Quarter-finals",
+   "date": "2018-07-06",
+   "team1": "Brazil",
+   "team2": "Belgium",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    2.609,
+    0.405
+   ]
+  },
+  {
+   "round": "Quarter-finals",
+   "date": "2018-07-07",
+   "team1": "Sweden",
+   "team2": "England",
+   "score": {
+    "ft": [
+     0,
+     2
+    ]
+   },
+   "xg": [
+    0.834,
+    0.758
+   ]
+  },
+  {
+   "round": "Quarter-finals",
+   "date": "2018-07-07",
+   "team1": "Russia",
+   "team2": "Croatia",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.071,
+    1.65
+   ]
+  },
+  {
+   "round": "Semi-finals",
+   "date": "2018-07-10",
+   "team1": "France",
+   "team2": "Belgium",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    1.682,
+    0.567
+   ]
+  },
+  {
+   "round": "Semi-finals",
+   "date": "2018-07-11",
+   "team1": "Croatia",
+   "team2": "England",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    2.141,
+    0.547
+   ]
+  },
+  {
+   "round": "Match for third place",
+   "date": "2018-07-14",
+   "team1": "Belgium",
+   "team2": "England",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    1.321,
+    1.335
+   ]
+  },
+  {
+   "round": "Final",
+   "date": "2018-07-15",
+   "team1": "France",
+   "team2": "Croatia",
+   "score": {
+    "ft": [
+     4,
+     2
+    ]
+   },
+   "xg": [
+    1.098,
+    1.48
+   ]
+  }
+ ]
+}
