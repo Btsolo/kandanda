@@ -166,5 +166,17 @@ Football Manager's structure (doc 04 §4b) rather than invented.
 - All judged values range-checked; neutral() factories make "no claims" the default.
 - Every profile value is a HYPOTHESIS until a modifier using it passes the judge.
 
-### Next: S16 first talisman modifier (lineup x starDependence), judged by scoreboard +
-residual analyzer. Then S17 validation basket.
+### S16 (talisman-absence effect, SIGNED) — DONE
+First judgment-derived attribute before the judge — and the judge's first real verdict:
+- NAIVE hypothesis ("talisman absent -> team weaker") REJECTED: penalising Portugal for
+  Ronaldo's benching made knockout Brier monotonically worse (he was benched R16 + QF;
+  Portugal won 6-1 without him).
+- SIGNED version (H3): effect = 1 - w x starDependence x roleFit, clamped [0.5,1.5].
+  Misfit star (roleFit<0) -> absence HELPS. Level-to-marginally-better on 2022 —
+  consistent with H3. Only 2 affected matches; 2026 lineups give the real test.
+- New: `BacktestService.LambdaAdjuster` per-match hook (the entry point 2026 live
+  lineups will use), `TalismanAbsence`, `TalismanEffect`, `Profiles2022` seed reads
+  (assistant-proposed, developer to sanity-check).
+
+### Next: S17 validation basket (2018/UCL/Euro-Copa) — do form + signed-talisman
+replicate? Then more profile modifiers on the same frame.

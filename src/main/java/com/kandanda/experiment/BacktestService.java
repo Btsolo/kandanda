@@ -156,6 +156,68 @@ public class BacktestService {
         return new double[]{goals, xg};
     }
 
+    /**
+     * Per-match lambda adjustment hook — the entry point for BEFORE-phase, per-fixture
+     * intelligence (e.g. lineup-based talisman absence). Season-level effects belong in
+     * {@link com.kandanda.tier2.RatingModifier}; per-match effects belong here. Must use
+     * only pre-kickoff information (lineups are known before kickoff — no leakage).
+     */
+    public interface LambdaAdjuster {
+        double[] adjust(MatchResult m, double lambdaHome, double lambdaAway);
+        LambdaAdjuster IDENTITY = (m, lh, la) -> new double[]{lh, la};
+    }
+
+    /**
+     * Sweep the talisman-absence effect weight (S16). For each knockout match where a
+     * team's talisman was absent, the team's attack lambda is multiplied by
+     * {@link com.kandanda.tier2.TalismanEffect#absenceMultiplier}. weight=0 is the base.
+     * The effect is SIGNED by roleFit (H3): a well-fitted star's absence hurts; a
+     * misfitted star's absence can help (the Ronaldo 2022 case).
+     */
+    public java.util.LinkedHashMap<Double, Double> sweepTalisman(
+            List<MatchResult> tournament, double k, double rho,
+            java.util.Collection<com.kandanda.profile.TeamProfile> teamProfiles,
+            java.util.Collection<com.kandanda.profile.PlayerProfile> playerProfiles,
+            java.util.Set<com.kandanda.tier2.TalismanAbsence> absences,
+            double[] weights) {
+        List<MatchResult> group = new ArrayList<>();
+        List<MatchResult> knockout = new ArrayList<>();
+        for (MatchResult m : tournament) {
+            if (isGroupStage(m.getRound())) group.add(m);
+            else knockout.add(m);
+        }
+        // team -> starDependence, team -> talisman roleFit
+        Map<String, Double> dep = new HashMap<>();
+        Map<String, Double> fitOf = new HashMap<>();
+        Map<String, Double> roleFitByPlayer = new HashMap<>();
+        for (var p : playerProfiles) roleFitByPlayer.put(p.name(), p.judgment().roleFit());
+        for (var t : teamProfiles) {
+            dep.put(t.team(), t.starDependence());
+            if (t.talisman() != null) {
+                fitOf.put(t.team(), roleFitByPlayer.getOrDefault(t.talisman(), 0.0));
+            }
+        }
+        var out = new java.util.LinkedHashMap<Double, Double>();
+        for (double w : weights) {
+            final double weight = w;
+            LambdaAdjuster adj = (m, lh, la) -> {
+                String h = m.getHomeTeam().getName(), a = m.getAwayTeam().getName();
+                if (absences.contains(new com.kandanda.tier2.TalismanAbsence(h, m.getRound()))) {
+                    lh *= com.kandanda.tier2.TalismanEffect.absenceMultiplier(
+                            dep.getOrDefault(h, 0.0), fitOf.getOrDefault(h, 0.0), weight);
+                }
+                if (absences.contains(new com.kandanda.tier2.TalismanAbsence(a, m.getRound()))) {
+                    la *= com.kandanda.tier2.TalismanEffect.absenceMultiplier(
+                            dep.getOrDefault(a, 0.0), fitOf.getOrDefault(a, 0.0), weight);
+                }
+                return new double[]{lh, la};
+            };
+            out.put(w, fitAndScore(group, knockout, k, rho,
+                    com.kandanda.tier2.ModifierPipeline.empty(), false, adj).brier());
+        }
+        return out;
+    }
+
     private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet, double k) {
         return fitAndScore(trainSet, testSet, k, 0.0);
     }
@@ -175,6 +237,14 @@ public class BacktestService {
                                           double k, double rho,
                                           com.kandanda.tier2.ModifierPipeline pipeline,
                                           boolean useXg) {
+        return fitAndScore(trainSet, testSet, k, rho, pipeline, useXg, LambdaAdjuster.IDENTITY);
+    }
+
+    private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet,
+                                          double k, double rho,
+                                          com.kandanda.tier2.ModifierPipeline pipeline,
+                                          boolean useXg,
+                                          LambdaAdjuster adjuster) {
         RatingService ratingService = new RatingService(k, useXg);
         List<TeamRating> ratings = ratingService.fit(trainSet);
         // Tier 2: apply rating modifiers (form, etc.) using ONLY the training (group) data.
@@ -192,7 +262,11 @@ public class BacktestService {
             // A team in the test set might not appear in the train set (can't rate it).
             if (home == null || away == null) continue;
 
-            MarketCalculator calc = new MarketCalculator(model.predict(home, away));
+            // Explicit lambdas so per-match adjusters (lineup intelligence) can hook in.
+            double lambdaHome = home.attack() * away.defence() * leagueAvg;
+            double lambdaAway = away.attack() * home.defence() * leagueAvg;
+            double[] adj = adjuster.adjust(m, lambdaHome, lambdaAway);
+            MarketCalculator calc = new MarketCalculator(model.buildGrid(adj[0], adj[1]));
             Map<String, Double> predicted = calc.headlineMarkets();
             Map<String, Boolean> actual = MatchOutcomes.of(m);
 

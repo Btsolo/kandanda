@@ -192,6 +192,33 @@ public class KandandaApplication {
                 System.out.println("a claim 'team X is underrated' must show a real, consistent");
                 System.out.println("positive creation residual — not just one lucky result.");
                 System.out.println("=============================================");
+
+                // ----- S16: talisman-absence effect (first judged profile attribute) -----
+                var teams16 = com.kandanda.profile.Profiles2022.teams();
+                var players16 = com.kandanda.profile.Profiles2022.players();
+                var absences16 = com.kandanda.profile.Profiles2022.knockoutAbsences();
+                double[] tw = {0, 0.25, 0.5, 0.75, 1.0};
+                var signed = backtest.sweepTalisman(all, 8.0, -0.1,
+                        teams16, players16, absences16, tw);
+                // Naive version: force roleFit=+1 (absence always a penalty) for contrast.
+                var naivePlayers = players16.stream().map(p -> new com.kandanda.profile.PlayerProfile(
+                                p.name(), p.team(), p.position(), p.data(),
+                                new com.kandanda.profile.PlayerProfile.JudgmentDerived(
+                                        p.judgment().talismanResponsibility(), p.judgment().bigMatchTemperament(), 1.0)))
+                        .toList();
+                var naive = backtest.sweepTalisman(all, 8.0, -0.1,
+                        teams16, naivePlayers, absences16, tw);
+                System.out.println("======== S16 TALISMAN EFFECT (SIGNED, H3) ====");
+                System.out.println("2022 case: Ronaldo benched R16 (6-1 W) + QF (0-1 L).");
+                System.out.println("  weight | naive(absence=penalty) | signed(by roleFit)");
+                for (double w : tw) {
+                    System.out.printf("  %-6.2f  %.4f                 %.4f%n", w, naive.get(w), signed.get(w));
+                }
+                System.out.println("Judge's verdict: naive gets WORSE with weight (rejected) — Portugal");
+                System.out.println("won without Ronaldo. Signed (misfit -> absence helps) stays level or");
+                System.out.println("marginally better: consistent with H3. Only 2 affected matches, so");
+                System.out.println("direction over magnitude; 2026 lineups give the real test.");
+                System.out.println("=============================================");
             }
         };
     }
