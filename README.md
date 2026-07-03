@@ -191,3 +191,10 @@ isGroupStage — the S14 bugfix paying off).
 
 ### Next: more basket tournaments (Euros/Copa) to grow the test bed; residuals on 2018;
 2026 live forward test with locked pre-match predictions.
+
+### S18 (2026 LIVE forward test) — LOCKED
+72 group games loaded (WC-2026, with xG). Trusted model only (goals, k=8, DC -0.1)
+fitted on the group stage; predictions for the 9 unplayed fixtures (3 R32 + 6 R16)
+printed by the runner and LOCKED by the git commit timestamp, pre-kickoff 2026-07-03.
+Rules: no SportRadar comparison until after results are scored (no mimicry); no model
+changes between lock and scoring. The gold-standard test no backtest can match.
