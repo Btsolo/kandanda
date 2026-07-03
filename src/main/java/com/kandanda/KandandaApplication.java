@@ -30,6 +30,7 @@ public class KandandaApplication {
         return args -> {
             int n = loader.load("data/worldcup-2022.json", "WC-2022");
             int n18 = loader.load("data/worldcup-2018.json", "WC-2018");
+            int n26 = loader.load("data/worldcup-2026.json", "WC-2026");
             long total = matchRepo.countByTournament("WC-2022");
             System.out.println("================ S2 DATA LOAD ================");
             System.out.println("Newly stored this run : " + n + " matches");
@@ -242,8 +243,78 @@ public class KandandaApplication {
                     System.out.println("working: a promising signal died honestly before shipping.");
                     System.out.println("=============================================");
                 }
+
+                // ----- S18: 2026 LIVE FORWARD TEST — locked pre-match predictions -----
+                List<MatchResult> wc26 = matchRepo.findByTournamentOrderByDateAsc("WC-2026");
+                if (!wc26.isEmpty()) {
+                    List<MatchResult> group26 = wc26.stream()
+                            .filter(mm -> mm.getRound() != null && mm.getRound().startsWith("Matchday"))
+                            .toList();
+                    var rs26 = new com.kandanda.rating.RatingService(8.0, false); // TRUSTED model only
+                    var ratings26 = rs26.fit(group26);
+                    double avg26 = rs26.leagueAverage(group26);
+                    var model26 = new com.kandanda.model.PoissonMatchModel(avg26, -0.1);
+                    java.util.Map<String, com.kandanda.rating.TeamRating> by26 = new java.util.HashMap<>();
+                    for (var r : ratings26) by26.put(r.team(), r);
+                    // Fixtures known and UNPLAYED at lock time (2026-07-03). The git commit
+                    // of this output is the tamper-proof timestamp. NO SportRadar peeking.
+                    String[][] fixtures = {
+                            {"Argentina", "Cape Verde"}, {"Colombia", "Ghana"}, {"Australia", "Egypt"},
+                            {"Canada", "Morocco"}, {"Paraguay", "France"}, {"Brazil", "Norway"},
+                            {"Mexico", "England"}, {"Spain", "Portugal"}, {"Belgium", "USA"}};
+                    System.out.println("==== S18 LIVE 2026: LOCKED PREDICTIONS ======");
+                    System.out.println("Trusted model ONLY (goals, prior k=8, DC rho=-0.1) fitted on the");
+                    System.out.println("72 group games. Locked pre-kickoff; scored as results arrive.");
+                    System.out.println("(Switzerland-Algeria already played -> excluded; SUI's R16 locks");
+                    System.out.println("once its opponent is known.)");
+                    // Lineup intelligence (EXPERIMENTAL, not the scored baseline): as
+                    // lineups drop, add e.g. new TalismanAbsence("Portugal","Round of 16")
+                    // below and re-run for the adjusted second set.
+                    java.util.Set<com.kandanda.tier2.TalismanAbsence> lineup26 = new java.util.HashSet<>();
+                    java.util.Map<String, Double> dep26 = new java.util.HashMap<>();
+                    java.util.Map<String, Double> fit26 = new java.util.HashMap<>();
+                    for (var tp : com.kandanda.profile.Profiles2026.teams()) dep26.put(tp.team(), tp.starDependence());
+                    for (var pp : com.kandanda.profile.Profiles2026.players()) fit26.put(pp.team(), pp.judgment().roleFit());
+                    for (String[] f : fixtures) {
+                        var th = by26.get(f[0]);
+                        var ta = by26.get(f[1]);
+                        if (th == null || ta == null) continue;
+                        double lh = th.attack() * ta.defence() * avg26;
+                        double la = ta.attack() * th.defence() * avg26;
+                        var mk = new com.kandanda.model.MarketCalculator(model26.buildGrid(lh, la)).headlineMarkets();
+                        System.out.printf("%n--- %s v %s  (xG %.2f - %.2f) ---%n", f[0], f[1], lh, la);
+                        for (var e : mk.entrySet()) {
+                            System.out.printf("   %-18s %5.1f%%%n", e.getKey(), 100 * e.getValue());
+                        }
+                        // Experimental lineup-adjusted view (only if absences entered):
+                        String rd = fixtureRound(f[0], f[1]);
+                        boolean habs = lineup26.contains(new com.kandanda.tier2.TalismanAbsence(f[0], rd));
+                        boolean aabs = lineup26.contains(new com.kandanda.tier2.TalismanAbsence(f[1], rd));
+                        if (habs || aabs) {
+                            double alh = habs ? lh * com.kandanda.tier2.TalismanEffect.absenceMultiplier(
+                                    dep26.getOrDefault(f[0], 0.0), fit26.getOrDefault(f[0], 0.0), 0.5) : lh;
+                            double ala = aabs ? la * com.kandanda.tier2.TalismanEffect.absenceMultiplier(
+                                    dep26.getOrDefault(f[1], 0.0), fit26.getOrDefault(f[1], 0.0), 0.5) : la;
+                            var mk2 = new com.kandanda.model.MarketCalculator(model26.buildGrid(alh, ala)).headlineMarkets();
+                            System.out.printf("   [EXPERIMENTAL lineup-adjusted] 1: %.1f%%  X: %.1f%%  2: %.1f%%%n",
+                                    100 * mk2.get("Home win"), 100 * mk2.get("Draw"), 100 * mk2.get("Away win"));
+                        }
+                    }
+                    System.out.println();
+                    System.out.println("Commit this output BEFORE the games. Compare to SportRadar only");
+                    System.out.println("AFTER results are scored (no mimicry). Scoring = S19: results get");
+                    System.out.println("appended to worldcup-2026.json and the locked calls are Briered.");
+                    System.out.println("=============================================");
+                }
             }
         };
+    }
+
+
+    /** Round label for a locked 2026 fixture (R32 for the July-3 trio, else R16). */
+    private static String fixtureRound(String home, String away) {
+        java.util.Set<String> r32 = java.util.Set.of("Argentina", "Colombia", "Australia");
+        return r32.contains(home) ? "Round of 32" : "Round of 16";
     }
 
     /** Print the n most likely exact scorelines from a grid. */

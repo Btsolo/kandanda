@@ -1,0 +1,1157 @@
+{
+ "name": "World Cup 2026",
+ "matches": [
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-11",
+   "team1": "Mexico",
+   "team2": "South Africa",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    1.41,
+    0.07
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-11",
+   "team1": "South Korea",
+   "team2": "Czechia",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    1.84,
+    0.81
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-12",
+   "team1": "Canada",
+   "team2": "Bosnia",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.25,
+    0.98
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-12",
+   "team1": "USA",
+   "team2": "Paraguay",
+   "score": {
+    "ft": [
+     4,
+     1
+    ]
+   },
+   "xg": [
+    1.35,
+    0.47
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-13",
+   "team1": "Qatar",
+   "team2": "Switzerland",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    0.76,
+    3.24
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-13",
+   "team1": "Brazil",
+   "team2": "Morocco",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.23,
+    1.53
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-13",
+   "team1": "Haiti",
+   "team2": "Scotland",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    1.21,
+    1.05
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-13",
+   "team1": "Australia",
+   "team2": "Türkiye",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    0.77,
+    1.33
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-14",
+   "team1": "Germany",
+   "team2": "Curaçao",
+   "score": {
+    "ft": [
+     7,
+     1
+    ]
+   },
+   "xg": [
+    4.22,
+    0.41
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-14",
+   "team1": "Netherlands",
+   "team2": "Japan",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    0.78,
+    0.59
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-14",
+   "team1": "Ivory Coast",
+   "team2": "Ecuador",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    1.68,
+    1.03
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-14",
+   "team1": "Sweden",
+   "team2": "Tunisia",
+   "score": {
+    "ft": [
+     5,
+     1
+    ]
+   },
+   "xg": [
+    1.36,
+    0.28
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-15",
+   "team1": "Spain",
+   "team2": "Cape Verde",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    2.29,
+    0.3
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-15",
+   "team1": "Belgium",
+   "team2": "Egypt",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.35,
+    1.08
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-15",
+   "team1": "Saudi Arabia",
+   "team2": "Uruguay",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    0.99,
+    1.54
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-15",
+   "team1": "Iran",
+   "team2": "New Zealand",
+   "score": {
+    "ft": [
+     2,
+     2
+    ]
+   },
+   "xg": [
+    1.5,
+    1.24
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-16",
+   "team1": "France",
+   "team2": "Senegal",
+   "score": {
+    "ft": [
+     3,
+     1
+    ]
+   },
+   "xg": [
+    1.79,
+    0.56
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-16",
+   "team1": "Iraq",
+   "team2": "Norway",
+   "score": {
+    "ft": [
+     1,
+     4
+    ]
+   },
+   "xg": [
+    0.77,
+    2.53
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-16",
+   "team1": "Argentina",
+   "team2": "Algeria",
+   "score": {
+    "ft": [
+     3,
+     1
+    ]
+   },
+   "xg": [
+    1.23,
+    0.31
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-16",
+   "team1": "Austria",
+   "team2": "Jordan",
+   "score": {
+    "ft": [
+     3,
+     1
+    ]
+   },
+   "xg": [
+    1.66,
+    0.53
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-17",
+   "team1": "Portugal",
+   "team2": "DR Congo",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    0.64,
+    0.82
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-17",
+   "team1": "England",
+   "team2": "Croatia",
+   "score": {
+    "ft": [
+     4,
+     2
+    ]
+   },
+   "xg": [
+    2.8,
+    0.71
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-17",
+   "team1": "Ghana",
+   "team2": "Panama",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    1.31,
+    0.75
+   ]
+  },
+  {
+   "round": "Matchday 1",
+   "date": "2026-06-17",
+   "team1": "Uzbekistan",
+   "team2": "Colombia",
+   "score": {
+    "ft": [
+     1,
+     3
+    ]
+   },
+   "xg": [
+    1.16,
+    1.62
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-18",
+   "team1": "Czechia",
+   "team2": "South Africa",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.02,
+    1.39
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-18",
+   "team1": "Switzerland",
+   "team2": "Bosnia",
+   "score": {
+    "ft": [
+     4,
+     1
+    ]
+   },
+   "xg": [
+    2.06,
+    0.23
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-18",
+   "team1": "Canada",
+   "team2": "Qatar",
+   "score": {
+    "ft": [
+     6,
+     0
+    ]
+   },
+   "xg": [
+    4.75,
+    0.18
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-19",
+   "team1": "Mexico",
+   "team2": "South Korea",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    0.48,
+    0.69
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-19",
+   "team1": "USA",
+   "team2": "Australia",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    1.08,
+    0.35
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-19",
+   "team1": "Scotland",
+   "team2": "Morocco",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    0.51,
+    0.99
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-19",
+   "team1": "Brazil",
+   "team2": "Haiti",
+   "score": {
+    "ft": [
+     3,
+     0
+    ]
+   },
+   "xg": [
+    1.56,
+    0.23
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-19",
+   "team1": "Türkiye",
+   "team2": "Paraguay",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    2.17,
+    0.32
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-20",
+   "team1": "Netherlands",
+   "team2": "Sweden",
+   "score": {
+    "ft": [
+     5,
+     1
+    ]
+   },
+   "xg": [
+    2.61,
+    1.01
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-20",
+   "team1": "Germany",
+   "team2": "Ivory Coast",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    1.89,
+    1.22
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-20",
+   "team1": "Ecuador",
+   "team2": "Curaçao",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    3.05,
+    0.48
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-20",
+   "team1": "Tunisia",
+   "team2": "Japan",
+   "score": {
+    "ft": [
+     0,
+     4
+    ]
+   },
+   "xg": [
+    0.05,
+    2.13
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-21",
+   "team1": "Spain",
+   "team2": "Saudi Arabia",
+   "score": {
+    "ft": [
+     4,
+     1
+    ]
+   },
+   "xg": [
+    2.3,
+    0.15
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-21",
+   "team1": "Belgium",
+   "team2": "Iran",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    1.79,
+    0.62
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-21",
+   "team1": "Uruguay",
+   "team2": "Cape Verde",
+   "score": {
+    "ft": [
+     2,
+     2
+    ]
+   },
+   "xg": [
+    2.32,
+    0.88
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-21",
+   "team1": "New Zealand",
+   "team2": "Egypt",
+   "score": {
+    "ft": [
+     1,
+     3
+    ]
+   },
+   "xg": [
+    1.24,
+    1.87
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-22",
+   "team1": "Argentina",
+   "team2": "Austria",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    2.62,
+    0.5
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-22",
+   "team1": "France",
+   "team2": "Iraq",
+   "score": {
+    "ft": [
+     3,
+     0
+    ]
+   },
+   "xg": [
+    2.38,
+    0.6
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-22",
+   "team1": "Norway",
+   "team2": "Senegal",
+   "score": {
+    "ft": [
+     3,
+     2
+    ]
+   },
+   "xg": [
+    2.1,
+    1.7
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-22",
+   "team1": "Jordan",
+   "team2": "Algeria",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    0.63,
+    1.89
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-23",
+   "team1": "England",
+   "team2": "Ghana",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    1.28,
+    0.33
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-23",
+   "team1": "Panama",
+   "team2": "Croatia",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    0.54,
+    1.63
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-23",
+   "team1": "Portugal",
+   "team2": "Uzbekistan",
+   "score": {
+    "ft": [
+     5,
+     0
+    ]
+   },
+   "xg": [
+    2.43,
+    0.25
+   ]
+  },
+  {
+   "round": "Matchday 2",
+   "date": "2026-06-23",
+   "team1": "Colombia",
+   "team2": "DR Congo",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    0.98,
+    0.37
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-24",
+   "team1": "Scotland",
+   "team2": "Brazil",
+   "score": {
+    "ft": [
+     0,
+     3
+    ]
+   },
+   "xg": [
+    1.13,
+    4.46
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-24",
+   "team1": "Morocco",
+   "team2": "Haiti",
+   "score": {
+    "ft": [
+     4,
+     2
+    ]
+   },
+   "xg": [
+    3.26,
+    0.66
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-24",
+   "team1": "Switzerland",
+   "team2": "Canada",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    1.11,
+    1.66
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-24",
+   "team1": "Bosnia",
+   "team2": "Qatar",
+   "score": {
+    "ft": [
+     3,
+     1
+    ]
+   },
+   "xg": [
+    1.57,
+    1.02
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-24",
+   "team1": "Czechia",
+   "team2": "Mexico",
+   "score": {
+    "ft": [
+     0,
+     3
+    ]
+   },
+   "xg": [
+    0.47,
+    1.79
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-24",
+   "team1": "South Africa",
+   "team2": "South Korea",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   },
+   "xg": [
+    1.1,
+    1.0
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-25",
+   "team1": "Curaçao",
+   "team2": "Ivory Coast",
+   "score": {
+    "ft": [
+     0,
+     2
+    ]
+   },
+   "xg": [
+    0.5,
+    1.31
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-25",
+   "team1": "Ecuador",
+   "team2": "Germany",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    1.27,
+    0.65
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-25",
+   "team1": "Japan",
+   "team2": "Sweden",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    1.31,
+    0.61
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-25",
+   "team1": "Tunisia",
+   "team2": "Netherlands",
+   "score": {
+    "ft": [
+     1,
+     3
+    ]
+   },
+   "xg": [
+    0.62,
+    1.85
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-25",
+   "team1": "Türkiye",
+   "team2": "USA",
+   "score": {
+    "ft": [
+     3,
+     2
+    ]
+   },
+   "xg": [
+    2.71,
+    2.06
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-25",
+   "team1": "Paraguay",
+   "team2": "Australia",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    0.24,
+    0.55
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-26",
+   "team1": "Egypt",
+   "team2": "Iran",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   },
+   "xg": [
+    0.84,
+    1.97
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-26",
+   "team1": "New Zealand",
+   "team2": "Belgium",
+   "score": {
+    "ft": [
+     1,
+     5
+    ]
+   },
+   "xg": [
+    0.25,
+    3.65
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-26",
+   "team1": "Cape Verde",
+   "team2": "Saudi Arabia",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    1.52,
+    0.4
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-26",
+   "team1": "Uruguay",
+   "team2": "Spain",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   },
+   "xg": [
+    0.2,
+    0.86
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-27",
+   "team1": "Norway",
+   "team2": "France",
+   "score": {
+    "ft": [
+     1,
+     4
+    ]
+   },
+   "xg": [
+    1.7,
+    1.5
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-27",
+   "team1": "Senegal",
+   "team2": "Iraq",
+   "score": {
+    "ft": [
+     5,
+     0
+    ]
+   },
+   "xg": [
+    3.01,
+    0.14
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-27",
+   "team1": "Algeria",
+   "team2": "Austria",
+   "score": {
+    "ft": [
+     3,
+     3
+    ]
+   },
+   "xg": [
+    1.67,
+    1.4
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-27",
+   "team1": "Jordan",
+   "team2": "Argentina",
+   "score": {
+    "ft": [
+     1,
+     3
+    ]
+   },
+   "xg": [
+    0.76,
+    2.13
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-27",
+   "team1": "Colombia",
+   "team2": "Portugal",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    1.63,
+    0.7
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-27",
+   "team1": "DR Congo",
+   "team2": "Uzbekistan",
+   "score": {
+    "ft": [
+     3,
+     1
+    ]
+   },
+   "xg": [
+    2.35,
+    0.2
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-27",
+   "team1": "Panama",
+   "team2": "England",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   },
+   "xg": [
+    0.59,
+    1.4
+   ]
+  },
+  {
+   "round": "Matchday 3",
+   "date": "2026-06-27",
+   "team1": "Croatia",
+   "team2": "Ghana",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   },
+   "xg": [
+    0.42,
+    0.73
+   ]
+  }
+ ]
+}
