@@ -218,6 +218,22 @@ public class BacktestService {
         return out;
     }
 
+    /**
+     * Score the LIVE forward test (S19): fit the trusted model on the tournament's group
+     * stage and Brier-score every knockout match whose result is in the data — the locked
+     * fixtures as their results arrive. Same no-leakage path as the backtest.
+     */
+    public CalibrationReport scoreLive(List<MatchResult> tournament, double k, double rho) {
+        List<MatchResult> group = new ArrayList<>();
+        List<MatchResult> knockout = new ArrayList<>();
+        for (MatchResult m : tournament) {
+            if (isGroupStage(m.getRound())) group.add(m);
+            else knockout.add(m);
+        }
+        if (knockout.isEmpty()) return null;
+        return fitAndScore(group, knockout, k, rho);
+    }
+
     private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet, double k) {
         return fitAndScore(trainSet, testSet, k, 0.0);
     }

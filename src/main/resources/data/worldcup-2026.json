@@ -1152,6 +1152,90 @@
     0.42,
     0.73
    ]
+  },
+  {
+   "round": "Round of 32",
+   "date": "2026-07-03",
+   "team1": "Argentina",
+   "team2": "Cape Verde",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "round": "Round of 32",
+   "date": "2026-07-03",
+   "team1": "Australia",
+   "team2": "Egypt",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "round": "Round of 32",
+   "date": "2026-07-03",
+   "team1": "Colombia",
+   "team2": "Ghana",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   }
+  },
+  {
+   "round": "Round of 16",
+   "date": "2026-07-04",
+   "team1": "Canada",
+   "team2": "Morocco",
+   "score": {
+    "ft": [
+     0,
+     3
+    ]
+   }
+  },
+  {
+   "round": "Round of 16",
+   "date": "2026-07-04",
+   "team1": "Paraguay",
+   "team2": "France",
+   "score": {
+    "ft": [
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "round": "Round of 16",
+   "date": "2026-07-05",
+   "team1": "Brazil",
+   "team2": "Norway",
+   "score": {
+    "ft": [
+     1,
+     2
+    ]
+   }
+  },
+  {
+   "round": "Round of 16",
+   "date": "2026-07-05",
+   "team1": "Mexico",
+   "team2": "England",
+   "score": {
+    "ft": [
+     2,
+     3
+    ]
+   }
   }
  ]
 }

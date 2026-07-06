@@ -198,3 +198,11 @@ fitted on the group stage; predictions for the 9 unplayed fixtures (3 R32 + 6 R1
 printed by the runner and LOCKED by the git commit timestamp, pre-kickoff 2026-07-03.
 Rules: no SportRadar comparison until after results are scored (no mimicry); no model
 changes between lock and scoring. The gold-standard test no backtest can match.
+
+### S19 (live scoring) — RUNNING, updated 06 Jul
+7 knockout results in (R32: ARG 1-1 CPV, AUS 1-1 EGY, COL 1-0 GHA; R16: CAN 0-3 MAR,
+PAR 0-1 FRA, BRA 1-2 NOR, MEX 2-3 ENG). LIVE Brier 0.2295 over 63 predictions —
+beats coin (0.25) and the 0.232-0.238 backtest band. Locked additions: SUI-COL,
+ARG-EGY (Jul 7), QFs FRA-MAR (Jul 9), NOR-ENG (Jul 11). Profiles2026 expanded to all
+12 remaining teams incl. standouts (Trossard, Bellingham, Ounahi...). Standout vs
+talisman distinction noted for S20 (data-derived standout + auto per-player stats).
