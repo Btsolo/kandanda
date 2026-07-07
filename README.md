@@ -206,3 +206,10 @@ beats coin (0.25) and the 0.232-0.238 backtest band. Locked additions: SUI-COL,
 ARG-EGY (Jul 7), QFs FRA-MAR (Jul 9), NOR-ENG (Jul 11). Profiles2026 expanded to all
 12 remaining teams incl. standouts (Trossard, Bellingham, Ounahi...). Standout vs
 talisman distinction noted for S20 (data-derived standout + auto per-player stats).
+
+### Ops mode (07 Jul): SHOW_HISTORY flag
+S2-S17 validation trail gated behind SHOW_HISTORY=false (flip true anytime; nothing
+deleted — findings live in README/docs/git). S18 now prints ONLY pending locks (played
+fixtures drop out automatically); S19 prints the per-game live scoreboard + total.
+Spain 1-0 Portugal added (Merino 90+1; xG 1.77-0.60 — Ronaldo's last WC). USA-Belgium
+pending; its QF (Spain vs winner, Jul 10) locks once known.

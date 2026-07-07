@@ -1236,6 +1236,18 @@
      3
     ]
    }
+  },
+  {
+   "round": "Round of 16",
+   "date": "2026-07-06",
+   "team1": "Spain",
+   "team2": "Portugal",
+   "score": {
+    "ft": [
+     1,
+     0
+    ]
+   }
   }
  ]
 }

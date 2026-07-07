@@ -234,6 +234,14 @@ public class BacktestService {
         return fitAndScore(group, knockout, k, rho);
     }
 
+    /** Score ONE played knockout game against the trusted model (per-game live line). */
+    public CalibrationReport scoreLiveGame(List<MatchResult> tournament, MatchResult game,
+                                           double k, double rho) {
+        List<MatchResult> group = new ArrayList<>();
+        for (MatchResult m : tournament) if (isGroupStage(m.getRound())) group.add(m);
+        return fitAndScore(group, List.of(game), k, rho);
+    }
+
     private CalibrationReport fitAndScore(List<MatchResult> trainSet, List<MatchResult> testSet, double k) {
         return fitAndScore(trainSet, testSet, k, 0.0);
     }
