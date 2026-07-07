@@ -213,3 +213,12 @@ deleted — findings live in README/docs/git). S18 now prints ONLY pending locks
 fixtures drop out automatically); S19 prints the per-game live scoreboard + total.
 Spain 1-0 Portugal added (Merino 90+1; xG 1.77-0.60 — Ronaldo's last WC). USA-Belgium
 pending; its QF (Spain vs winner, Jul 10) locks once known.
+
+### S20 (chemistry, forward test) — PRE-REGISTERED 07 Jul
+2022 backtest of chemistry was DISQUALIFIED: the 2022 profile values were written in
+2026 knowing 2022's outcomes — hindsight leaking through the judgment layer. New rule:
+judgment-derived attributes are only validated on games played AFTER the judgments were
+written. Therefore: forward test on remaining 2026 games, pre-registered w=0.2
+attack-only, printed as an EXPERIMENTAL line beside each pending lock. Baseline stays
+the scored model. Rejected idea also logged: rolling knockout refit (worse on 2022 AND
+2018 at every weight — knockout data routes to the residual/profile layer, not ratings).
