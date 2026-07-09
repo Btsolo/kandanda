@@ -222,3 +222,24 @@ written. Therefore: forward test on remaining 2026 games, pre-registered w=0.2
 attack-only, printed as an EXPERIMENTAL line beside each pending lock. Baseline stays
 the scored model. Rejected idea also logged: rolling knockout refit (worse on 2022 AND
 2018 at every weight — knockout data routes to the residual/profile layer, not ratings).
+
+### S19 update (09 Jul data) — 11 knockout results scored
+SUI 0-0 COL (SUI on pens; Vargas winner, Kobel save) and ARG 3-2 EGY (Enzo 90+3)
+recorded. LIVE Brier 0.2267 over 121 predictions (coin 0.25; backtests ~0.232-0.238).
+Best games: ARG-EGY 0.1972, BEL-USA 0.1973. 4th QF locked: Argentina-Switzerland.
+
+### S20 chemistry — first head-to-head (2-game sample)
+SUI-COL: base 0.2324 beats chem 0.2633 (chem pushed goals; 0-0 punished it).
+ARG-EGY: chem 0.1672 beats base 0.1972 (five goals rewarded it). Net: 1-1 — verdict
+lives with the QFs. No conclusions from 2 games.
+
+### S22 roster upgrade — developer-built comprehensive profiles
+PlayerProfile gains TacticalDerived (11-value team-function vector: buildUp,
+progression, chanceCreation, boxThreat, width, pressing, defensiveControl,
+transition, possessionSecurity, setPiece, lateGameImpact + fmRole/archetype);
+ManagerProfile gains TacticalPlan (8 biases). Both backward-compatible.
+ProfilesQF2026Comprehensive: 207 players + 8 managers across all QF teams, built
+from the developer's FM-style analysis reports (xT/OBV/archetype framework).
+Feeds EXPERIMENTAL modifiers only — hypotheses until judged. Known injury/absence
+candidates from the reports: Manzambi (SUI, knee), Nico Williams (ESP, hamstring),
+Quansah (ENG, suspended R16 red).

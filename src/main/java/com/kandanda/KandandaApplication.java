@@ -270,7 +270,8 @@ public class KandandaApplication {
                         {"Canada", "Morocco"}, {"Paraguay", "France"}, {"Brazil", "Norway"},
                         {"Mexico", "England"}, {"Spain", "Portugal"}, {"Belgium", "USA"},
                         {"Switzerland", "Colombia"}, {"Argentina", "Egypt"},   // locked 07-04
-                        {"France", "Morocco"}, {"Norway", "England"}};         // QFs locked 07-06
+                        {"France", "Morocco"}, {"Norway", "England"},
+                        {"Spain", "Belgium"}, {"Argentina", "Switzerland"}};       // QF locked 07-07         // QFs locked 07-06
                 System.out.println("==== S18 LIVE 2026: LOCKED PREDICTIONS ======");
                 System.out.println("Trusted model ONLY (goals, prior k=8, DC rho=-0.1) fitted on the");
                 System.out.println("72 group games. Locked pre-kickoff; scored as results arrive.");
@@ -284,6 +285,11 @@ public class KandandaApplication {
                 java.util.Map<String, Double> fit26 = new java.util.HashMap<>();
                 for (var tp : com.kandanda.profile.Profiles2026.teams()) dep26.put(tp.team(), tp.starDependence());
                 for (var pp : com.kandanda.profile.Profiles2026.players()) fit26.put(pp.team(), pp.judgment().roleFit());
+                // S20 pre-registered forward test (2026-07-07): chemistry, attack-only,
+                // w=0.2, declared BEFORE the QFs. Judgment profiles may only be validated
+                // on games played AFTER the judgments were written (hindsight rule).
+                java.util.Map<String, Double> chem26 = new java.util.HashMap<>();
+                for (var tp : com.kandanda.profile.Profiles2026.teams()) chem26.put(tp.team(), tp.chemistry());
                 java.util.Set<String> played = new java.util.HashSet<>();
                 for (MatchResult km : wc26) {
                     if (!km.getRound().startsWith("Matchday")) {
@@ -299,9 +305,18 @@ public class KandandaApplication {
                     double lh = th.attack() * ta.defence() * avg26;
                     double la = ta.attack() * th.defence() * avg26;
                     var mk = new com.kandanda.model.MarketCalculator(model26.buildGrid(lh, la)).headlineMarkets();
-                    System.out.printf("%n--- %s v %s  (xG %.2f - %.2f) ---%n", f[0], f[1], lh, la);
+                    // S20 chemistry view (pre-registered w=0.2, attack-only) shown inline
+                    // as base/chem for EVERY market. Base is the scored lock; chem is the
+                    // experimental forward test (games after pre-reg only; BEL-USA excluded).
+                    double c20h = 1 + 0.2 * chem26.getOrDefault(f[0], 0.0);
+                    double c20a = 1 + 0.2 * chem26.getOrDefault(f[1], 0.0);
+                    var mkC = new com.kandanda.model.MarketCalculator(
+                            model26.buildGrid(lh * c20h, la * c20a)).headlineMarkets();
+                    System.out.printf("%n--- %s v %s  (xG %.2f - %.2f)   [base / chem w=0.2] ---%n",
+                            f[0], f[1], lh, la);
                     for (var e : mk.entrySet()) {
-                        System.out.printf("   %-18s %5.1f%%%n", e.getKey(), 100 * e.getValue());
+                        System.out.printf("   %-18s %5.1f%% / %5.1f%%%n",
+                                e.getKey(), 100 * e.getValue(), 100 * mkC.get(e.getKey()));
                     }
                     // Experimental lineup-adjusted view (only if absences entered):
                     String rd = fixtureRound(f[0], f[1]);
@@ -338,6 +353,24 @@ public class KandandaApplication {
                     System.out.printf("TOTAL: Brier %.4f over %d predictions%n", live.brier(), live.count());
                     System.out.println("(coin = 0.2500; 2022/2018 backtests ~0.232-0.238)");
                     System.out.println("=============================================");
+
+                    // ----- S21: knockout residual intake (killer instinct, measured) -----
+                    List<MatchResult> g26 = wc26.stream()
+                            .filter(mm -> mm.getRound().startsWith("Matchday")).toList();
+                    List<MatchResult> k26 = wc26.stream()
+                            .filter(mm -> !mm.getRound().startsWith("Matchday") && mm.hasXg()).toList();
+                    System.out.println("===== S21 KNOCKOUT RESIDUALS (killer instinct) =====");
+                    if (k26.isEmpty()) {
+                        System.out.println("No knockout xG yet — add \"xg\":[h,a] to knockout entries");
+                        System.out.println("in worldcup-2026.json (RealGM tracker) and re-run.");
+                    } else {
+                        System.out.printf("%d knockout games with xG. Finishing = goals-xG (clinical /", k26.size());
+                        System.out.println(" killer instinct); creation = xG-expected (outplaying rating).");
+                        new com.kandanda.analysis.ResidualAnalyzer(8.0)
+                                .analyseOutOfSample(g26, k26)
+                                .forEach(tr -> System.out.println("   " + tr));
+                    }
+                    System.out.println("=============================================");
                 }
             }
         };
@@ -349,7 +382,7 @@ public class KandandaApplication {
         String pair = home + "|" + away;
         if (java.util.Set.of("Argentina|Cape Verde", "Colombia|Ghana", "Australia|Egypt")
                 .contains(pair)) return "Round of 32";
-        if (java.util.Set.of("France|Morocco", "Norway|England").contains(pair))
+        if (java.util.Set.of("France|Morocco", "Norway|England", "Spain|Belgium", "Argentina|Switzerland").contains(pair))
             return "Quarter-finals";
         return "Round of 16";
     }

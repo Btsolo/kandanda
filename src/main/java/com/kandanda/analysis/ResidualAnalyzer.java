@@ -58,6 +58,46 @@ public class ResidualAnalyzer {
      * @param matches matches to analyse (e.g. the group stage). Must carry xG.
      * @return one {@link TeamResidual} per team, sorted by creation mean (best first)
      */
+    /**
+     * S21: OUT-OF-SAMPLE residuals — fit expectations on {@code fitOn} (the group stage),
+     * measure residuals on {@code evalOn} (knockout games carrying xG). This is the
+     * "killer instinct" intake: knockout finishing residual (goals − xG) is the measured
+     * form of clinical finishing on the big stage; creation residual (xG − expected)
+     * shows who genuinely outplays their group-stage rating in knockouts. Knockout data
+     * routes HERE, not into the ratings (rolling refit was rejected on 2022+2018).
+     */
+    public List<TeamResidual> analyseOutOfSample(List<MatchResult> fitOn, List<MatchResult> evalOn) {
+        if (fitOn == null || fitOn.isEmpty()) throw new IllegalArgumentException("No fit matches");
+        RatingService ratingService = new RatingService(priorStrength, true);
+        List<TeamRating> ratings = ratingService.fit(fitOn);
+        double avg = ratingService.leagueAverage(fitOn);
+        Map<String, TeamRating> byName = new HashMap<>();
+        for (TeamRating tr : ratings) byName.put(tr.team(), tr);
+
+        Map<String, List<Double>> creation = new HashMap<>();
+        Map<String, List<Double>> finishing = new HashMap<>();
+        for (MatchResult m : evalOn) {
+            if (!m.hasXg()) continue;
+            String h = m.getHomeTeam().getName(), a = m.getAwayTeam().getName();
+            TeamRating rh = byName.get(h), ra = byName.get(a);
+            if (rh == null || ra == null) continue;
+            double expH = rh.attack() * ra.defence() * avg;
+            double expA = ra.attack() * rh.defence() * avg;
+            creation.computeIfAbsent(h, k -> new ArrayList<>()).add(m.getHomeXg() - expH);
+            creation.computeIfAbsent(a, k -> new ArrayList<>()).add(m.getAwayXg() - expA);
+            finishing.computeIfAbsent(h, k -> new ArrayList<>()).add(m.getHomeGoals() - m.getHomeXg());
+            finishing.computeIfAbsent(a, k -> new ArrayList<>()).add(m.getAwayGoals() - m.getAwayXg());
+        }
+        List<TeamResidual> out = new ArrayList<>();
+        for (String team : creation.keySet()) {
+            double[] c = summarise(creation.get(team));
+            double[] f = summarise(finishing.get(team));
+            out.add(new TeamResidual(team, creation.get(team).size(), c[0], c[1], f[0], f[1]));
+        }
+        out.sort(Comparator.comparingDouble(TeamResidual::finishingMean).reversed());
+        return out;
+    }
+
     public List<TeamResidual> analyse(List<MatchResult> matches) {
         if (matches == null || matches.isEmpty()) {
             throw new IllegalArgumentException("No matches to analyse");
