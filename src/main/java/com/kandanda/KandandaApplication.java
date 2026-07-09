@@ -290,6 +290,10 @@ public class KandandaApplication {
                 // on games played AFTER the judgments were written (hindsight rule).
                 java.util.Map<String, Double> chem26 = new java.util.HashMap<>();
                 for (var tp : com.kandanda.profile.Profiles2026.teams()) chem26.put(tp.team(), tp.chemistry());
+                // S23 EXPERIMENTAL: importance-weighted tactical indices from the 206-player roster.
+                var tacIdx = com.kandanda.profile.TacticalAggregate.compute(
+                        com.kandanda.profile.ProfilesQF2026Comprehensive.players());
+                final double wTac = 0.5;
                 java.util.Set<String> played = new java.util.HashSet<>();
                 for (MatchResult km : wc26) {
                     if (!km.getRound().startsWith("Matchday")) {
@@ -318,6 +322,13 @@ public class KandandaApplication {
                         System.out.printf("   %-18s %5.1f%% / %5.1f%%%n",
                                 e.getKey(), 100 * e.getValue(), 100 * mkC.get(e.getKey()));
                     }
+                    // S23 experimental tactical-aggregate line (candidate signal, not scored)
+                    double tacH = com.kandanda.profile.TacticalAggregate.attackMultiplier(f[0], f[1], tacIdx, wTac);
+                    double tacA = com.kandanda.profile.TacticalAggregate.attackMultiplier(f[1], f[0], tacIdx, wTac);
+                    var mkT = new com.kandanda.model.MarketCalculator(
+                            model26.buildGrid(lh * tacH, la * tacA)).headlineMarkets();
+                    System.out.printf("   [EXPERIMENTAL tactical w=0.5] 1: %.1f%%  X: %.1f%%  2: %.1f%%  (xGmult %.3f/%.3f)%n",
+                            100 * mkT.get("Home win"), 100 * mkT.get("Draw"), 100 * mkT.get("Away win"), tacH, tacA);
                     // Experimental lineup-adjusted view (only if absences entered):
                     String rd = fixtureRound(f[0], f[1]);
                     boolean habs = lineup26.contains(new com.kandanda.tier2.TalismanAbsence(f[0], rd));
