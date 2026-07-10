@@ -382,11 +382,72 @@ public class KandandaApplication {
                                 .forEach(tr -> System.out.println("   " + tr));
                     }
                     System.out.println("=============================================");
+
+                    // ----- S24: candidate scoreboard — base vs chem vs tactical -----
+                    // Each candidate scored ONLY on games from its pre-registration date
+                    // (chemistry + tactical: 2026-07-07, before the QFs). All 11 markets.
+                    // Candidates are shown beside the baseline; the baseline remains the
+                    // one true scored model. This is the judge for the QF experiments.
+                    java.time.LocalDate chemStart = java.time.LocalDate.parse("2026-07-07");
+                    double sB = 0, sC = 0, sT = 0; int nCand = 0;
+                    StringBuilder rows = new StringBuilder();
+                    for (MatchResult km : wc26) {
+                        if (km.getRound().startsWith("Matchday")) continue;
+                        if (km.getDate() == null || km.getDate().isBefore(chemStart)) continue;
+                        String h = km.getHomeTeam().getName(), a = km.getAwayTeam().getName();
+                        var th = by26.get(h); var ta = by26.get(a);
+                        if (th == null || ta == null) continue;
+                        double lh = th.attack() * ta.defence() * avg26;
+                        double la = ta.attack() * th.defence() * avg26;
+                        double ch = 1 + 0.2 * chem26.getOrDefault(h, 0.0);
+                        double ca = 1 + 0.2 * chem26.getOrDefault(a, 0.0);
+                        double thm = com.kandanda.profile.TacticalAggregate.attackMultiplier(h, a, tacIdx, wTac);
+                        double tam = com.kandanda.profile.TacticalAggregate.attackMultiplier(a, h, tacIdx, wTac);
+                        double bB = brierMarkets(model26, lh, la, km.getHomeGoals(), km.getAwayGoals());
+                        double bC = brierMarkets(model26, lh * ch, la * ca, km.getHomeGoals(), km.getAwayGoals());
+                        double bT = brierMarkets(model26, lh * thm, la * tam, km.getHomeGoals(), km.getAwayGoals());
+                        sB += bB; sC += bC; sT += bT; nCand++;
+                        rows.append(String.format("  %-24s %.4f  %.4f  %.4f%n",
+                                h + " " + km.getHomeGoals() + "-" + km.getAwayGoals() + " " + a, bB, bC, bT));
+                    }
+                    System.out.println("====== S24 CANDIDATE SCOREBOARD (QF experiments) =====");
+                    if (nCand == 0) {
+                        System.out.println("No games in the valid sample yet (from 2026-07-07).");
+                    } else {
+                        System.out.printf("Games from 07-07 (chem+tactical valid sample). 11 markets.%n");
+                        System.out.printf("  %-24s %6s  %6s  %6s%n", "game", "base", "chem", "tac");
+                        System.out.print(rows);
+                        System.out.printf("  %-24s %.4f  %.4f  %.4f%n",
+                                "MEAN (" + nCand + " games)", sB / nCand, sC / nCand, sT / nCand);
+                        System.out.println("Baseline is the scored model; chem/tactical are CANDIDATES.");
+                        System.out.println("Lowest mean wins — but only a full QF+ sample gives a verdict.");
+                    }
+                    System.out.println("=============================================");
                 }
             }
         };
     }
 
+
+    /** Brier over all 11 headline markets for a single game at the given lambdas. */
+    private static double brierMarkets(com.kandanda.model.PoissonMatchModel model,
+                                       double lh, double la, int hg, int ag) {
+        var mk = new com.kandanda.model.MarketCalculator(model.buildGrid(lh, la)).headlineMarkets();
+        boolean[] out = {
+                hg > ag, hg == ag, hg < ag, hg >= ag, hg <= ag,
+                hg + ag > 2.5, hg + ag < 2.5, hg > 0 && ag > 0, hg == 0 || ag == 0,
+                (hg + ag) % 2 == 1, (hg + ag) % 2 == 0
+        };
+        String[] keys = {"Home win", "Draw", "Away win", "Double chance 1X", "Double chance X2",
+                "Over 2.5", "Under 2.5", "BTTS yes", "BTTS no", "Odd goals", "Even goals"};
+        double s = 0;
+        for (int i = 0; i < keys.length; i++) {
+            double p = mk.get(keys[i]);
+            double y = out[i] ? 1.0 : 0.0;
+            s += (p - y) * (p - y);
+        }
+        return s / keys.length;
+    }
 
     /** Round label for a locked 2026 fixture (R32 for the July-3 trio, else R16). */
     private static String fixtureRound(String home, String away) {
