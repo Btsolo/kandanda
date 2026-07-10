@@ -1316,6 +1316,22 @@
     2.72,
     0.86
    ]
+  },
+  {
+   "round": "Quarter-finals",
+   "date": "2026-07-09",
+   "team1": "France",
+   "team2": "Morocco",
+   "score": {
+    "ft": [
+     2,
+     0
+    ]
+   },
+   "xg": [
+    3.04,
+    0.14
+   ]
   }
  ]
 }
