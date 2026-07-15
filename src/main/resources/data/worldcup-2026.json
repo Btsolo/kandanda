@@ -1368,6 +1368,22 @@
      1
     ]
    }
+  },
+  {
+   "round": "Semi-finals",
+   "date": "2026-07-14",
+   "team1": "France",
+   "team2": "Spain",
+   "score": {
+    "ft": [
+     0,
+     2
+    ]
+   },
+   "xg": [
+    0.26,
+    1.9
+   ]
   }
  ]
 }
