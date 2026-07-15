@@ -1332,6 +1332,42 @@
     3.04,
     0.14
    ]
+  },
+  {
+   "round": "Quarter-finals",
+   "date": "2026-07-10",
+   "team1": "Spain",
+   "team2": "Belgium",
+   "score": {
+    "ft": [
+     2,
+     1
+    ]
+   }
+  },
+  {
+   "round": "Quarter-finals",
+   "date": "2026-07-11",
+   "team1": "Norway",
+   "team2": "England",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "round": "Quarter-finals",
+   "date": "2026-07-11",
+   "team1": "Argentina",
+   "team2": "Switzerland",
+   "score": {
+    "ft": [
+     1,
+     1
+    ]
+   }
   }
  ]
 }

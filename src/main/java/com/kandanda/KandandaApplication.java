@@ -271,7 +271,8 @@ public class KandandaApplication {
                         {"Mexico", "England"}, {"Spain", "Portugal"}, {"Belgium", "USA"},
                         {"Switzerland", "Colombia"}, {"Argentina", "Egypt"},   // locked 07-04
                         {"France", "Morocco"}, {"Norway", "England"},
-                        {"Spain", "Belgium"}, {"Argentina", "Switzerland"}};       // QF locked 07-07         // QFs locked 07-06
+                        {"Spain", "Belgium"}, {"Argentina", "Switzerland"},
+                        {"France", "Spain"}, {"England", "Argentina"}};   // SEMIS locked 07-13
                 System.out.println("==== S18 LIVE 2026: LOCKED PREDICTIONS ======");
                 System.out.println("Trusted model ONLY (goals, prior k=8, DC rho=-0.1) fitted on the");
                 System.out.println("72 group games. Locked pre-kickoff; scored as results arrive.");
@@ -456,6 +457,8 @@ public class KandandaApplication {
                 .contains(pair)) return "Round of 32";
         if (java.util.Set.of("France|Morocco", "Norway|England", "Spain|Belgium", "Argentina|Switzerland").contains(pair))
             return "Quarter-finals";
+        if (java.util.Set.of("France|Spain", "England|Argentina").contains(pair))
+            return "Semi-finals";
         return "Round of 16";
     }
 
