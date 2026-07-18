@@ -272,7 +272,9 @@ public class KandandaApplication {
                         {"Switzerland", "Colombia"}, {"Argentina", "Egypt"},   // locked 07-04
                         {"France", "Morocco"}, {"Norway", "England"},
                         {"Spain", "Belgium"}, {"Argentina", "Switzerland"},
-                        {"France", "Spain"}, {"England", "Argentina"}};   // SEMIS locked 07-13
+                        {"France", "Spain"}, {"England", "Argentina"},   // SEMIS locked 07-13
+                        {"England", "France"}, {"Argentina", "Spain"}};   // 3rd place + FINAL locked 07-16
+
                 System.out.println("==== S18 LIVE 2026: LOCKED PREDICTIONS ======");
                 System.out.println("Trusted model ONLY (goals, prior k=8, DC rho=-0.1) fitted on the");
                 System.out.println("72 group games. Locked pre-kickoff; scored as results arrive.");
@@ -317,19 +319,17 @@ public class KandandaApplication {
                     double c20a = 1 + 0.2 * chem26.getOrDefault(f[1], 0.0);
                     var mkC = new com.kandanda.model.MarketCalculator(
                             model26.buildGrid(lh * c20h, la * c20a)).headlineMarkets();
-                    System.out.printf("%n--- %s v %s  (xG %.2f - %.2f)   [base / chem w=0.2] ---%n",
-                            f[0], f[1], lh, la);
-                    for (var e : mk.entrySet()) {
-                        System.out.printf("   %-18s %5.1f%% / %5.1f%%%n",
-                                e.getKey(), 100 * e.getValue(), 100 * mkC.get(e.getKey()));
-                    }
-                    // S23 experimental tactical-aggregate line (candidate signal, not scored)
                     double tacH = com.kandanda.profile.TacticalAggregate.attackMultiplier(f[0], f[1], tacIdx, wTac);
                     double tacA = com.kandanda.profile.TacticalAggregate.attackMultiplier(f[1], f[0], tacIdx, wTac);
                     var mkT = new com.kandanda.model.MarketCalculator(
                             model26.buildGrid(lh * tacH, la * tacA)).headlineMarkets();
-                    System.out.printf("   [EXPERIMENTAL tactical w=0.5] 1: %.1f%%  X: %.1f%%  2: %.1f%%  (xGmult %.3f/%.3f)%n",
-                            100 * mkT.get("Home win"), 100 * mkT.get("Draw"), 100 * mkT.get("Away win"), tacH, tacA);
+                    System.out.printf("%n--- %s v %s  (xG %.2f - %.2f)   [base / chem / tac] ---%n",
+                            f[0], f[1], lh, la);
+                    for (var e : mk.entrySet()) {
+                        System.out.printf("   %-18s %5.1f%% / %5.1f%% / %5.1f%%%n",
+                                e.getKey(), 100 * e.getValue(), 100 * mkC.get(e.getKey()), 100 * mkT.get(e.getKey()));
+                    }
+
                     // Experimental lineup-adjusted view (only if absences entered):
                     String rd = fixtureRound(f[0], f[1]);
                     boolean habs = lineup26.contains(new com.kandanda.tier2.TalismanAbsence(f[0], rd));
@@ -459,6 +459,10 @@ public class KandandaApplication {
             return "Quarter-finals";
         if (java.util.Set.of("France|Spain", "England|Argentina").contains(pair))
             return "Semi-finals";
+        if (java.util.Set.of("France|Spain", "England|Argentina").contains(pair))
+            return "Semi-finals";
+        if (pair.equals("England|France")) return "Third place";
+        if (pair.equals("Argentina|Spain")) return "Final";
         return "Round of 16";
     }
 
