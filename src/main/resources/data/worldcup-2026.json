@@ -1408,6 +1408,34 @@
      2
     ]
    }
+  },
+  {
+   "round": "Third place",
+   "date": "2026-07-18",
+   "team1": "England",
+   "team2": "France",
+   "score": {
+    "ft": [
+     6,
+     4
+    ]
+   }
+  },
+  {
+   "round": "Final",
+   "date": "2026-07-19",
+   "team1": "Argentina",
+   "team2": "Spain",
+   "score": {
+    "ft": [
+     0,
+     0
+    ]
+   },
+   "xg": [
+    0.2,
+    1.94
+   ]
   }
  ]
 }
